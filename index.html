@@ -283,7 +283,7 @@
       }).join("");
     }
 
-    // Rich HTML Clipboard Generator for Gmail
+    // Rich HTML Clipboard Generator for Gmail with Centered Vector Pokéball
     window.copyHtmlInvite = async function(childName) {
       const baseUrl = window.location.origin + window.location.pathname;
       const guestLink = `${baseUrl}?guest=${encodeURIComponent(childName)}`;
@@ -323,14 +323,16 @@
           Pokémon & Ninja Academy Celebration
         </div>
 
-        <!-- True-Circle Pokéball Button -->
+        <!-- Perfectly Centered Vector Pokéball Button -->
         <div style="margin: 0 auto 18px auto; text-align: center;">
           <a href="${guestLink}" target="_blank" style="text-decoration: none; display: inline-block;">
-            <div style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #facc15; background: linear-gradient(180deg, #dc2626 0%, #dc2626 46%, #090d16 46%, #090d16 54%, #f8fafc 54%, #f8fafc 100%); margin: 0 auto; position: relative; box-shadow: 0 8px 24px rgba(220,38,38,0.5);">
-              <div style="width: 26px; height: 26px; border-radius: 50%; background-color: #050811; border: 2.5px solid #facc15; position: relative; top: 24px; margin: 0 auto; color: #facc15; font-size: 13px; font-weight: 900; line-height: 25px; text-align: center; font-family: Arial, sans-serif;">
-                6
-              </div>
-            </div>
+            <svg width="84" height="84" viewBox="0 0 100 100" style="display: block; margin: 0 auto; filter: drop-shadow(0 8px 18px rgba(220,38,38,0.5));">
+              <circle cx="50" cy="50" r="48" fill="#f8fafc" stroke="#facc15" stroke-width="4"/>
+              <path d="M 2 50 A 48 48 0 0 1 98 50 Z" fill="#dc2626"/>
+              <line x1="2" y1="50" x2="98" y2="50" stroke="#090d16" stroke-width="8"/>
+              <circle cx="50" cy="50" r="16" fill="#050811" stroke="#facc15" stroke-width="3"/>
+              <text x="50" y="56" fill="#facc15" font-size="16" font-weight="900" font-family="Arial, sans-serif" text-anchor="middle" dominant-baseline="middle">6</text>
+            </svg>
             <div style="font-size: 11px; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;">
               Tap Pokéball to Open & RSVP
             </div>
