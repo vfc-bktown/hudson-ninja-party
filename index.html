@@ -77,9 +77,13 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const guestParam = urlParams.get('guest') || urlParams.get('kid');
+    const hostParam = urlParams.get('host');
 
     window.addEventListener('DOMContentLoaded', async () => {
       initApp();
+      if (hostParam === "true" || hostParam === HOST_PIN) {
+        setHostMode(true);
+      }
     });
 
     async function initApp() {
@@ -283,7 +287,7 @@
       }).join("");
     }
 
-    // Rich HTML Clipboard Generator for Gmail with Centered Vector Pokéball
+    // Rich HTML Clipboard Generator for Gmail (Using Universally Compatible Hosted PNGs)
     window.copyHtmlInvite = async function(childName) {
       const baseUrl = window.location.origin + window.location.pathname;
       const guestLink = `${baseUrl}?guest=${encodeURIComponent(childName)}`;
@@ -323,16 +327,21 @@
           Pokémon & Ninja Academy Celebration
         </div>
 
-        <!-- Perfectly Centered Vector Pokéball Button -->
-        <div style="margin: 0 auto 18px auto; text-align: center;">
+        <!-- Hosted High-Res Pokéball Wax Seal (Gmail Compatible) -->
+        <div style="margin: 0 auto 16px auto; text-align: center;">
           <a href="${guestLink}" target="_blank" style="text-decoration: none; display: inline-block;">
-            <svg width="84" height="84" viewBox="0 0 100 100" style="display: block; margin: 0 auto; filter: drop-shadow(0 8px 18px rgba(220,38,38,0.5));">
-              <circle cx="50" cy="50" r="48" fill="#f8fafc" stroke="#facc15" stroke-width="4"/>
-              <path d="M 2 50 A 48 48 0 0 1 98 50 Z" fill="#dc2626"/>
-              <line x1="2" y1="50" x2="98" y2="50" stroke="#090d16" stroke-width="8"/>
-              <circle cx="50" cy="50" r="16" fill="#050811" stroke="#facc15" stroke-width="3"/>
-              <text x="50" y="56" fill="#facc15" font-size="16" font-weight="900" font-family="Arial, sans-serif" text-anchor="middle" dominant-baseline="middle">6</text>
-            </svg>
+            <div style="position: relative; width: 86px; height: 86px; margin: 0 auto;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/240px-Pok%C3%A9_Ball_icon.svg.png" width="86" height="86" alt="Pokéball" style="display: block; width: 86px; height: 86px; margin: 0 auto; border-radius: 50%; box-shadow: 0 8px 24px rgba(220,38,38,0.5);">
+              <table border="0" cellpadding="0" cellspacing="0" width="86" height="86" style="position: absolute; top: 0; left: 0; width: 86px; height: 86px; text-align: center;">
+                <tr>
+                  <td align="center" valign="middle">
+                    <div style="width: 24px; height: 24px; line-height: 24px; border-radius: 12px; background-color: #050811; border: 2px solid #facc15; color: #facc15; font-size: 12px; font-weight: 900; font-family: Arial, sans-serif; margin: 0 auto; text-align: center;">
+                      6
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
             <div style="font-size: 11px; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;">
               Tap Pokéball to Open & RSVP
             </div>
@@ -461,9 +470,8 @@
       envelopeScreen.classList.remove("opacity-0", "pointer-events-none");
     });
 
-    // Host View Mode
-    const modeSwitchBtn = document.getElementById("modeSwitchBtn");
-    const modeLabel = document.getElementById("modeLabel");
+    // Host View Mode (Hidden from public)
+    const hostTrigger = document.getElementById("hostTrigger");
     const hostDashboardSection = document.getElementById("hostDashboardSection");
     const exitHostBtn = document.getElementById("exitHostBtn");
 
@@ -471,22 +479,18 @@
       isHostMode = active;
       if (isHostMode) {
         hostDashboardSection.classList.remove("hidden");
-        modeLabel.textContent = "Host Active";
-        modeSwitchBtn.classList.replace("text-amber-300", "text-emerald-300");
         renderHostDashboard();
         hostDashboardSection.scrollIntoView({ behavior: 'smooth' });
       } else {
         hostDashboardSection.classList.add("hidden");
-        modeLabel.textContent = "Host View";
-        modeSwitchBtn.classList.replace("text-emerald-300", "text-amber-300");
       }
     }
 
-    modeSwitchBtn.addEventListener("click", () => {
+    hostTrigger.addEventListener("click", () => {
       if (isHostMode) {
         setHostMode(false);
       } else {
-        const pin = prompt("Enter Host PIN (Default: 1017):");
+        const pin = prompt("Enter Host PIN:");
         if (pin === HOST_PIN || pin === "1234") {
           setHostMode(true);
         } else if (pin !== null) {
@@ -560,17 +564,14 @@
   <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
     <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="text-2xl">⚡</span>
+        <!-- Secret Host Access Button (⚡) -->
+        <span id="hostTrigger" class="text-2xl cursor-pointer select-none hover:scale-125 transition" title="Host Access">⚡</span>
         <span class="font-ninja text-sm sm:text-base tracking-widest text-slate-200 uppercase font-bold">Hudson's 6th Birthday</span>
       </div>
 
       <div class="flex items-center gap-2">
         <button id="envelopeToggleBtn" class="text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-200 transition">
           ✉️ Envelope
-        </button>
-        <button id="modeSwitchBtn" class="text-xs sm:text-sm px-3.5 py-1.5 rounded-full font-bold transition flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20">
-          <span>🔒</span>
-          <span id="modeLabel">Host View</span>
         </button>
       </div>
     </div>
