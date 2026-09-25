@@ -8,40 +8,34 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
   
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #090d16;
+      background-color: #050811;
       color: #f8fafc;
     }
-    .font-serif-luxury {
-      font-family: 'Playfair Display', serif;
-    }
-    .font-ninja {
-      font-family: 'Cinzel', serif;
-    }
+    .font-serif-luxury { font-family: 'Playfair Display', serif; }
+    .font-ninja { font-family: 'Cinzel', serif; }
     .gold-gradient-text {
       background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #eab308 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .gold-border {
-      border-color: rgba(250, 204, 21, 0.4);
-    }
+    .gold-border { border-color: rgba(250, 204, 21, 0.45); }
     .wax-seal {
-      box-shadow: 0 12px 30px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+      box-shadow: 0 12px 30px rgba(239, 68, 68, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .wax-seal:hover {
       transform: scale(1.08);
-      box-shadow: 0 16px 36px rgba(239, 68, 68, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 16px 36px rgba(239, 68, 68, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.5);
     }
-    .pokemon-float {
-      animation: pokeFloat 3.5s ease-in-out infinite;
+    .poke-float {
+      animation: pokeBounce 3s ease-in-out infinite;
     }
-    @keyframes pokeFloat {
+    @keyframes pokeBounce {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-8px); }
     }
@@ -52,13 +46,13 @@
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
     <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-2.5">
-        <span class="text-xl">⚡</span>
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">⚡</span>
         <span class="font-ninja text-sm sm:text-base tracking-widest text-slate-200 uppercase font-bold">Hudson's 6th Birthday</span>
       </div>
 
       <div class="flex items-center gap-2">
-        <button id="envelopeToggleBtn" class="text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-300 transition">
+        <button id="envelopeToggleBtn" class="text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-200 transition">
           ✉️ Envelope
         </button>
         <button id="modeSwitchBtn" class="text-xs sm:text-sm px-3.5 py-1.5 rounded-full font-bold transition flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20">
@@ -69,19 +63,19 @@
     </div>
   </header>
 
-  <!-- Interactive Envelope Overlay -->
+  <!-- Interactive Envelope Presentation Overlay -->
   <div id="envelopeScreen" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-700">
     <div class="w-full max-w-md relative">
       <div class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-400/40 rounded-3xl p-8 sm:p-10 text-center shadow-2xl overflow-hidden">
         
-        <!-- Envelope Character Art -->
-        <div class="flex justify-center -mt-2 mb-2">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-28 h-28 object-contain drop-shadow-2xl pokemon-float">
+        <!-- Large Visual Character Graphic -->
+        <div class="flex justify-center -mt-2 mb-3">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-28 h-28 object-contain drop-shadow-2xl poke-float" onerror="this.src='https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png'">
         </div>
 
         <div class="space-y-4">
-          <div class="inline-block px-4 py-1.5 rounded-full text-xs font-ninja tracking-widest uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30 font-bold">
-            Official Mission Invite
+          <div class="inline-block px-4 py-1 rounded-full text-xs font-ninja tracking-widest uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30 font-bold">
+            Birthday Battle Invite
           </div>
 
           <h1 class="text-3xl sm:text-4xl font-serif-luxury font-bold text-white tracking-wide leading-tight">
@@ -89,7 +83,7 @@
           </h1>
           <p class="text-sm text-amber-400 font-ninja tracking-wider uppercase font-semibold">Pokémon & Ninja Academy</p>
 
-          <!-- Pokéball Wax Seal Interactive Button -->
+          <!-- Pokéball Wax Seal Button -->
           <div class="py-3 flex flex-col items-center justify-center">
             <button id="breakSealBtn" class="wax-seal group relative w-24 h-24 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center border-4 border-amber-400 cursor-pointer focus:outline-none">
               <div class="absolute inset-0 rounded-full flex flex-col overflow-hidden pointer-events-none opacity-90">
@@ -141,42 +135,47 @@
   <!-- Main Content Layout -->
   <main class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
 
-    <!-- Stationery Hero Card With Pokémon Images -->
-    <section class="relative bg-gradient-to-b from-slate-900/90 to-slate-950 border-2 gold-border rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-6 overflow-hidden">
-      <!-- Glow Accents -->
-      <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Stationery Hero Card With Pikachu and Greninja -->
+    <section class="relative bg-gradient-to-b from-slate-900/95 to-slate-950 border-2 gold-border rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-6 overflow-hidden">
+      
+      <!-- Glow background -->
+      <div class="absolute -top-10 -right-10 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <!-- Character Artwork Banner -->
-      <div class="flex items-center justify-center gap-4 sm:gap-10 pt-2">
-        <div class="relative group">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-24 sm:w-32 h-24 sm:h-32 object-contain drop-shadow-[0_10px_20px_rgba(250,204,21,0.25)] pokemon-float">
-          <span class="text-[11px] font-ninja tracking-wider text-amber-300 font-bold block mt-1">PIKACHU</span>
-        </div>
+      <!-- VISUAL ARTWORK: PIKACHU & GRENINJA BATTLE BANNER -->
+      <div class="flex items-center justify-around gap-2 pt-2 px-2">
         
-        <div class="w-12 h-12 rounded-full bg-amber-400/10 border border-amber-400/40 flex items-center justify-center font-ninja font-black text-amber-300 text-lg">
-          VS
+        <!-- Pikachu Card -->
+        <div class="flex flex-col items-center bg-slate-950/70 border border-amber-400/30 rounded-2xl p-3 w-36 sm:w-44 shadow-lg">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-24 sm:w-28 h-24 sm:h-28 object-contain poke-float drop-shadow-[0_8px_16px_rgba(250,204,21,0.3)]">
+          <div class="text-xs sm:text-sm font-ninja font-black text-amber-300 mt-2">PIKACHU</div>
+          <span class="text-[10px] text-amber-400/80 font-bold uppercase tracking-wider">Electric Ninja</span>
         </div>
 
-        <div class="relative group">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png" alt="Greninja" class="w-24 sm:w-32 h-24 sm:h-32 object-contain drop-shadow-[0_10px_20px_rgba(59,130,246,0.25)] pokemon-float" style="animation-delay: 1.5s;">
-          <span class="text-[11px] font-ninja tracking-wider text-blue-400 font-bold block mt-1">GRENINJA</span>
+        <!-- Center Battle Emblem -->
+        <div class="flex flex-col items-center justify-center">
+          <div class="w-12 h-12 rounded-full bg-red-600/20 border-2 border-red-500 flex items-center justify-center font-ninja font-black text-white text-base shadow-lg shadow-red-500/20">
+            VS
+          </div>
+          <span class="text-[11px] font-ninja font-bold text-slate-400 mt-1 uppercase tracking-widest">BATTLE</span>
         </div>
+
+        <!-- Greninja Card -->
+        <div class="flex flex-col items-center bg-slate-950/70 border border-blue-500/30 rounded-2xl p-3 w-36 sm:w-44 shadow-lg">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png" alt="Greninja" class="w-24 sm:w-28 h-24 sm:h-28 object-contain poke-float drop-shadow-[0_8px_16px_rgba(59,130,246,0.3)]" style="animation-delay: 1.5s;">
+          <div class="text-xs sm:text-sm font-ninja font-black text-blue-400 mt-2">GRENINJA</div>
+          <span class="text-[10px] text-blue-400/80 font-bold uppercase tracking-wider">Water Shuriken</span>
+        </div>
+
       </div>
 
-      <div class="space-y-3">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-ninja tracking-wider uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30 font-bold">
-          <span>⚡</span>
-          <span>You're Invited</span>
-          <span>⚡</span>
-        </div>
-
+      <div class="space-y-3 pt-2">
         <h1 class="text-4xl sm:text-6xl font-serif-luxury font-bold text-white tracking-tight leading-tight">
           Hudson is <br><span class="gold-gradient-text">Turning 6!</span>
         </h1>
 
         <p class="text-base sm:text-lg text-slate-200 max-w-lg mx-auto font-medium">
-          Join Hudson for 2 hours of private Pokémon battles and Ninja Warrior obstacle courses!
+          2 hours of private Pokémon battles & Ninja Warrior obstacle courses!
         </p>
       </div>
 
@@ -186,7 +185,7 @@
           <span class="text-3xl">📅</span>
           <div>
             <div class="text-base sm:text-lg font-bold text-white">Saturday, Oct 17</div>
-            <div class="text-sm font-semibold text-amber-400">10:00 AM – 12:00 PM</div>
+            <div class="text-sm font-bold text-amber-400">10:00 AM – 12:00 PM</div>
           </div>
         </div>
 
@@ -220,7 +219,7 @@
     <section class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
       <div class="border-b border-slate-800 pb-4">
         <h2 class="text-xl sm:text-2xl font-bold font-ninja text-white">RSVP for Your Ninja</h2>
-        <p class="text-sm text-slate-300 mt-1">Select your child's name to let Hudson know if they can battle!</p>
+        <p class="text-sm text-slate-300 mt-1">Select your child's name to let Hudson know if they can attend!</p>
       </div>
 
       <div class="p-3.5 rounded-xl bg-blue-950/40 border border-blue-800/40 flex items-start gap-2.5 text-xs sm:text-sm text-blue-200">
@@ -366,11 +365,12 @@
   </main>
 
   <script>
+    // Corrected to "Eamonn" in alphabetical order
     const INITIAL_GUESTS = [
       { name: "Arthur", status: "Awaiting", dietary: "", contact: "", note: "" },
       { name: "Cleo", status: "Awaiting", dietary: "", contact: "", note: "" },
       { name: "Covey", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Eamon", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Eamonn", status: "Awaiting", dietary: "", contact: "", note: "" },
       { name: "Henri", status: "Awaiting", dietary: "", contact: "", note: "" },
       { name: "Hudson", status: "Attending", dietary: "Birthday Ninja ⭐", contact: "Host", note: "Let's Battle!" },
       { name: "Jemel", status: "Awaiting", dietary: "", contact: "", note: "" },
@@ -382,7 +382,7 @@
       { name: "Waleska", status: "Awaiting", dietary: "", contact: "", note: "" }
     ];
 
-    const STORAGE_KEY = "hudson_6th_bday_guests_v5";
+    const STORAGE_KEY = "hudson_6th_bday_guests_v7";
     const HOST_PIN = "1017";
 
     function getGuests() {
