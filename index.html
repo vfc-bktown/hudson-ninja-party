@@ -112,26 +112,21 @@
     }
 
     function renderApp() {
-      renderPersonalizedBanner();
+      renderPersonalizedElements();
       renderRsvpDropdown();
       renderGuestCards();
       if (isHostMode) renderHostDashboard();
     }
 
-    function renderPersonalizedBanner() {
-      const banner = document.getElementById("personalizedBanner");
-      const nameHeading = document.getElementById("personalizedHeading");
+    function renderPersonalizedElements() {
       const subHeading = document.getElementById("envelopeSubHeading");
 
       if (guestParam) {
         const matched = guestsData.find(g => g.name.toLowerCase() === guestParam.toLowerCase());
         const targetName = matched ? matched.name : guestParam;
-        
-        banner.classList.remove("hidden");
-        nameHeading.textContent = `Special Mission For: ${targetName}`;
-        subHeading.textContent = `Invitation prepared exclusively for ${targetName}`;
+        subHeading.textContent = `Special Mission for ${targetName}`;
       } else {
-        banner.classList.add("hidden");
+        subHeading.textContent = `Pokémon & Ninja Academy`;
       }
     }
 
@@ -316,9 +311,9 @@
           </tr>
         </table>
 
-        <!-- Personalized Target Banner -->
+        <!-- Target Banner -->
         <div style="display: inline-block; background-color: rgba(234,179,8,0.15); border: 1px solid #eab308; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; color: #fde047; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 20px;">
-          VIP Mission Invite For: ${childName}
+          Special Mission for ${childName}
         </div>
 
         <h1 style="font-size: 28px; line-height: 1.2; font-weight: 900; color: #ffffff; margin: 16px 0 6px 0; font-family: Georgia, serif;">
@@ -596,7 +591,7 @@
           <h1 class="text-3xl sm:text-4xl font-serif-luxury font-bold text-white tracking-wide leading-tight">
             Hudson is Turning 6!
           </h1>
-          <p id="envelopeSubHeading" class="text-sm text-amber-400 font-ninja tracking-wider uppercase font-semibold">Pokémon & Ninja Academy</p>
+          <p id="envelopeSubHeading" class="text-sm text-amber-400 font-ninja tracking-wider uppercase font-semibold">Special Mission</p>
 
           <div class="py-3 flex flex-col items-center justify-center">
             <button id="breakSealBtn" class="wax-seal group relative w-24 h-24 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center border-4 border-amber-400 cursor-pointer focus:outline-none">
@@ -625,12 +620,6 @@
 
   <!-- Main Content Layout -->
   <main class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
-
-    <!-- Personalized VIP Guest Welcome Bar -->
-    <div id="personalizedBanner" class="hidden bg-gradient-to-r from-red-900/60 to-amber-900/60 border border-amber-400/50 rounded-2xl p-4 text-center">
-      <span class="text-xs font-ninja tracking-widest text-amber-300 uppercase font-bold">Personalized Roster Link</span>
-      <h2 id="personalizedHeading" class="text-lg sm:text-xl font-bold text-white mt-0.5">Special Mission For: Ninja Guest</h2>
-    </div>
 
     <!-- Hero Card -->
     <section class="relative bg-gradient-to-b from-slate-900/95 to-slate-950 border-2 gold-border rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-6 overflow-hidden">
@@ -836,7 +825,7 @@
               <th class="p-3.5 text-right">Host Actions</th>
             </tr>
           </thead>
-          <tbody id="hostTableBody" class="divide-y divide-slate-800/80 bg-slate-950/60"></tbody>
+          <tbody id="hostTableBody" class="divide-y border-slate-800/80 bg-slate-950/60"></tbody>
         </table>
       </div>
 
