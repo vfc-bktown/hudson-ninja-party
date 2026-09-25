@@ -287,13 +287,13 @@
       }).join("");
     }
 
-    // Rich HTML Clipboard Generator with Dark-Mode Shields & Clean Copy
+    // Rich HTML Clipboard Generator with Strict Font Color Protection
     window.copyHtmlInvite = async function(childName) {
       const baseUrl = window.location.origin + window.location.pathname;
       const guestLink = `${baseUrl}?guest=${encodeURIComponent(childName)}`;
 
       const htmlContent = `
-<div style="background-color: #060913; background-image: linear-gradient(#060913, #060913); padding: 24px 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-align: center; color: #f8fafc;">
+<div style="background-color: #060913; background-image: linear-gradient(#060913, #060913); padding: 24px 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-align: center;">
   
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px; margin: 0 auto; background-color: #0d1322; background-image: linear-gradient(#0d1322, #0d1322); border-radius: 24px; border: 2px solid #eab308; overflow: hidden; box-shadow: 0 16px 36px rgba(0,0,0,0.8);">
     <tr>
@@ -321,11 +321,16 @@
           Special Mission for ${childName}
         </div>
 
-        <h1 style="font-size: 27px; line-height: 1.2; font-weight: 900; color: #ffffff; margin: 14px 0 6px 0; font-family: Georgia, serif;">
-          Hudson is Turning 6!
-        </h1>
-        <div style="font-size: 12px; font-weight: 700; color: #facc15; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;">
-          Pokémon & Ninja Academy Celebration
+        <!-- High-Contrast Title Shielded from Inversion -->
+        <div style="margin: 14px 0 6px 0; text-align: center;">
+          <span style="font-size: 28px; line-height: 1.2; font-weight: 900; color: #fef08a; font-family: Georgia, serif; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">
+            Hudson is Turning 6!
+          </span>
+        </div>
+        <div style="margin-bottom: 20px; text-align: center;">
+          <span style="font-size: 12px; font-weight: 700; color: #fde047; text-transform: uppercase; letter-spacing: 1.5px;">
+            Pokémon & Ninja Academy Celebration
+          </span>
         </div>
 
         <!-- Inversion-Shielded Pokéball -->
@@ -361,18 +366,24 @@
           </tr>
         </table>
 
-        <!-- Logistics Card -->
+        <!-- Logistics Card with Inversion-Proof Font Colors -->
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #050811; background-image: linear-gradient(#050811, #050811); border-radius: 16px; border: 1px solid #1e293b; margin: 16px 0 20px 0; text-align: center;">
           <tr>
             <td style="padding: 16px 18px;">
-              <div style="font-size: 15px; font-weight: 800; color: #ffffff; margin-bottom: 4px;">
-                🗓️ Saturday, October 17 • 10:00 AM – 12:00 PM
+              <div style="margin-bottom: 4px;">
+                <span style="font-size: 15px; font-weight: 800; color: #fef08a;">
+                  🗓️ Saturday, October 17 • 10:00 AM – 12:00 PM
+                </span>
               </div>
-              <div style="font-size: 13px; color: #94a3b8;">
-                📍 Ferox Ninja Park • 65 Jay St, DUMBO
+              <div>
+                <span style="font-size: 13px; font-weight: 600; color: #cbd5e1;">
+                  📍 Ferox Ninja Park • 65 Jay St, DUMBO
+                </span>
               </div>
-              <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #1e293b; font-size: 12px; font-weight: 600; color: #fef08a;">
-                🍕 Pizza & Ice Cream Cake Served • 🧦 Grip Socks Provided
+              <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #1e293b;">
+                <span style="font-size: 12px; font-weight: 700; color: #fde047;">
+                  🍕 Pizza & Ice Cream Cake Served • 🧦 Grip Socks Provided
+                </span>
               </div>
             </td>
           </tr>
