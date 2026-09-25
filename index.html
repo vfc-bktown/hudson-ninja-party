@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hudson's 6th Birthday | Ninja Warrior & Pokémon Academy</title>
+  <title>Hudson's 6th Birthday | Pokémon & Ninja Warrior</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
   
   <style>
     body {
-      font-family: 'Outfit', sans-serif;
-      background-color: #0b0f19;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #090d16;
       color: #f8fafc;
     }
     .font-serif-luxury {
@@ -23,48 +23,38 @@
       font-family: 'Cinzel', serif;
     }
     .gold-gradient-text {
-      background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+      background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #eab308 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .gold-border {
-      border-color: rgba(234, 179, 8, 0.35);
-    }
-    .envelope-card {
-      perspective: 1200px;
+      border-color: rgba(250, 204, 21, 0.35);
     }
     .wax-seal {
-      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 12px 30px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.4);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .wax-seal:hover {
       transform: scale(1.08);
-      box-shadow: 0 12px 28px rgba(239, 68, 68, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4);
-    }
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      box-shadow: 0 16px 36px rgba(239, 68, 68, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.5);
     }
   </style>
 </head>
-<body class="min-h-screen antialiased selection:bg-amber-400 selection:text-slate-900 pb-20">
+<body class="min-h-screen antialiased selection:bg-amber-400 selection:text-slate-900 pb-24">
 
-  <!-- Top Navigation Bar -->
-  <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
-    <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
-        <span class="font-ninja text-xs tracking-widest text-slate-300 uppercase font-semibold">Hudson's 6th Birthday</span>
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="text-xl">⚡</span>
+        <span class="font-ninja text-sm sm:text-base tracking-widest text-slate-200 uppercase font-bold">Hudson's 6th Birthday</span>
       </div>
 
       <div class="flex items-center gap-2">
-        <button id="envelopeToggleBtn" class="text-xs px-3 py-1.5 rounded-full border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-300 transition">
-          ✉️ Envelope View
+        <button id="envelopeToggleBtn" class="text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-300 transition">
+          ✉️ Envelope
         </button>
-        <button id="modeSwitchBtn" class="text-xs px-3 py-1.5 rounded-full font-medium transition flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500/20">
+        <button id="modeSwitchBtn" class="text-xs sm:text-sm px-3.5 py-1.5 rounded-full font-bold transition flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20">
           <span>🔒</span>
           <span id="modeLabel">Host View</span>
         </button>
@@ -73,289 +63,283 @@
   </header>
 
   <!-- Interactive Envelope Presentation Overlay -->
-  <div id="envelopeScreen" class="fixed inset-0 z-30 bg-slate-950 flex items-center justify-center p-4 transition-all duration-700">
-    <div class="envelope-card w-full max-w-lg relative">
-      <!-- Background Glow -->
-      <div class="absolute -inset-1 bg-gradient-to-r from-red-600 via-amber-500 to-yellow-500 rounded-2xl blur-lg opacity-30"></div>
-      
-      <!-- Envelope Outer Body -->
-      <div class="relative bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/40 rounded-2xl p-8 sm:p-12 text-center shadow-2xl overflow-hidden">
+  <div id="envelopeScreen" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-700">
+    <div class="w-full max-w-md relative">
+      <div class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-400/30 rounded-3xl p-8 sm:p-10 text-center shadow-2xl overflow-hidden">
         
-        <!-- Flap Design Motif -->
-        <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-48 h-24 bg-slate-800/60 rotate-45 border border-amber-500/20 rounded-lg pointer-events-none"></div>
-
-        <div class="relative z-10 space-y-6">
-          <div class="inline-block px-3.5 py-1 rounded-full text-[11px] font-ninja tracking-widest uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30">
-            Exclusive Mission Invitation
+        <div class="space-y-6">
+          <div class="inline-block px-4 py-1.5 rounded-full text-xs font-ninja tracking-widest uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30 font-bold">
+            Official Mission Invite
           </div>
 
           <div>
-            <p class="text-xs uppercase tracking-widest text-slate-400 mb-1">To the families of the Ninja Clan</p>
-            <h1 class="text-2xl sm:text-3xl font-serif-luxury font-bold text-white tracking-wide">
+            <h1 class="text-3xl sm:text-4xl font-serif-luxury font-bold text-white tracking-wide leading-tight">
               Hudson is Turning 6!
             </h1>
-            <p class="text-xs text-amber-400/90 font-ninja mt-1 tracking-wider uppercase">Pokémon & Ninja Academy</p>
+            <p class="text-sm text-amber-400 font-ninja mt-2 tracking-wider uppercase font-semibold">Pokémon & Ninja Warrior Academy</p>
           </div>
 
           <!-- Pokéball Wax Seal Interactive Button -->
           <div class="py-4 flex flex-col items-center justify-center">
-            <button id="breakSealBtn" class="wax-seal group relative w-24 h-24 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center border-4 border-amber-400/80 cursor-pointer focus:outline-none">
-              <!-- Pokeball Visual Cutout -->
-              <div class="absolute inset-0 rounded-full flex flex-col overflow-hidden pointer-events-none opacity-80">
+            <button id="breakSealBtn" class="wax-seal group relative w-24 h-24 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center border-4 border-amber-400 cursor-pointer focus:outline-none">
+              <div class="absolute inset-0 rounded-full flex flex-col overflow-hidden pointer-events-none opacity-90">
                 <div class="h-1/2 bg-red-600"></div>
-                <div class="h-1 bg-slate-950"></div>
+                <div class="h-1.5 bg-slate-950"></div>
                 <div class="h-1/2 bg-slate-100"></div>
               </div>
-              <div class="relative z-10 w-9 h-9 rounded-full bg-slate-950 border-2 border-amber-300 flex items-center justify-center shadow-md">
-                <span class="text-xs font-bold font-ninja text-amber-300">6</span>
+              <div class="relative z-10 w-9 h-9 rounded-full bg-slate-950 border-2 border-amber-300 flex items-center justify-center shadow-lg">
+                <span class="text-sm font-black font-ninja text-amber-300">6</span>
               </div>
             </button>
-            <span class="text-[11px] font-ninja tracking-widest uppercase text-slate-400 mt-4 group-hover:text-amber-300 transition">
+            <span class="text-xs font-ninja tracking-widest uppercase text-slate-300 mt-4 font-bold group-hover:text-amber-300 transition">
               Tap Pokéball Seal to Open
             </span>
           </div>
 
-          <div class="text-xs text-slate-400 font-light max-w-xs mx-auto">
+          <div class="text-sm text-slate-300 font-medium">
             Sat, Oct 17 • 10:00 AM – 12:00 PM<br>
-            Ferox Ninja Playground, DUMBO
+            <span class="text-slate-400">Ferox Ninja Playground, DUMBO</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Main Content Layout (Invitation & Dashboard) -->
-  <main class="max-w-3xl mx-auto px-4 pt-6 space-y-8">
+  <!-- Confirmation Modal (Prevents accidental mix-ups) -->
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 rounded-3xl p-6 sm:p-7 max-w-sm w-full shadow-2xl border border-slate-700 text-center space-y-4">
+      <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl">
+        ⚠️
+      </div>
+      <div>
+        <h3 class="text-lg font-bold text-white">Confirm Child Selection</h3>
+        <p id="confirmModalText" class="text-sm text-slate-300 mt-2">
+          An RSVP was already recorded for this child. Are you sure you are updating their response?
+        </p>
+      </div>
+      <div class="flex gap-2.5 pt-2">
+        <button id="modalCancelBtn" class="flex-1 py-3 rounded-xl border border-slate-700 text-sm font-bold text-slate-300 hover:bg-slate-800 transition">
+          Oops, Change
+        </button>
+        <button id="modalConfirmBtn" class="flex-1 py-3 rounded-xl bg-red-600 text-sm font-bold text-white hover:bg-red-700 transition shadow-lg shadow-red-600/30">
+          Yes, That's Us
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
 
     <!-- Stationery Hero Card -->
-    <section class="relative bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-slate-950 border gold-border rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-sm overflow-hidden">
-      <!-- Decorative Accents -->
-      <div class="absolute top-0 right-0 w-36 h-36 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute bottom-0 left-0 w-36 h-36 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <section class="relative bg-gradient-to-b from-slate-900/90 to-slate-950 border-2 gold-border rounded-3xl p-6 sm:p-10 shadow-2xl text-center space-y-6 overflow-hidden">
+      <!-- Glow Accents -->
+      <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="text-center space-y-4">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-ninja tracking-wider uppercase bg-amber-500/10 text-amber-300 border border-amber-500/30">
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-ninja tracking-wider uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30 font-bold">
           <span>⚡</span>
-          <span>Official Mission Briefing</span>
+          <span>You're Invited</span>
           <span>⚡</span>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl font-serif-luxury font-bold text-white tracking-tight leading-tight">
-          Hudson’s <span class="gold-gradient-text">6th Birthday</span>
+        <h1 class="text-4xl sm:text-6xl font-serif-luxury font-bold text-white tracking-tight leading-tight">
+          Hudson is <br><span class="gold-gradient-text">Turning 6!</span>
         </h1>
 
-        <p class="text-sm sm:text-base text-slate-300 max-w-lg mx-auto font-light leading-relaxed">
-          Suit up for an exclusive 2-hour private Pokémon and Ninja Warrior training session. Obstacle courses, battle games, and celebration!
+        <p class="text-base sm:text-lg text-slate-200 max-w-lg mx-auto font-medium">
+          Get ready for a private 2-hour Pokémon & Ninja Warrior training battle in DUMBO!
         </p>
+      </div>
 
-        <!-- Quick Detail Badges -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 text-left max-w-xl mx-auto">
-          <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800">
-            <span class="text-xl">📅</span>
-            <div>
-              <div class="text-xs font-semibold text-white">Saturday, October 17, 2026</div>
-              <div class="text-xs text-amber-400">10:00 AM – 12:00 PM</div>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800">
-            <span class="text-xl">📍</span>
-            <div>
-              <div class="text-xs font-semibold text-white">Ferox Ninja Playground</div>
-              <div class="text-xs text-slate-400">65 Jay St, Brooklyn (DUMBO)</div>
-            </div>
+      <!-- High-Visibility Event Detail Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center gap-3.5">
+          <span class="text-3xl">📅</span>
+          <div>
+            <div class="text-base sm:text-lg font-bold text-white">Saturday, Oct 17</div>
+            <div class="text-sm font-semibold text-amber-400">10:00 AM – 12:00 PM</div>
           </div>
         </div>
 
-        <!-- Ferox Grip Socks Highlight -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-300">
-          <span>🧦</span>
-          <span><strong>Grip socks are provided by Ferox</strong> for all kids upon arrival! Athletic clothes recommended.</span>
+        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center gap-3.5">
+          <span class="text-3xl">📍</span>
+          <div>
+            <div class="text-base sm:text-lg font-bold text-white">Ferox Ninja Park</div>
+            <div class="text-sm font-medium text-slate-300">65 Jay St, DUMBO</div>
+          </div>
         </div>
+      </div>
 
-        <!-- Action Links: Maps + Calendar -->
-        <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-          <a href="https://maps.google.com/?q=Ferox+Athletics+65+Jay+St+Brooklyn+NY+11201" target="_blank" rel="noopener noreferrer" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
-            <span>🗺️</span> Open in Google Maps
-          </a>
-          <button id="addToCalBtn" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
-            <span>🗓️</span> Add to Calendar (.ics)
-          </button>
-        </div>
+      <!-- Grip Socks Highlight Badge -->
+      <div class="p-3.5 rounded-2xl bg-red-950/40 border border-red-500/30 text-sm sm:text-base text-red-200 flex items-center justify-center gap-2 font-medium">
+        <span class="text-xl">🧦</span>
+        <span><strong>Grip socks provided by Ferox</strong> for all kids upon arrival!</span>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+        <a href="https://maps.google.com/?q=Ferox+Athletics+65+Jay+St+Brooklyn+NY+11201" target="_blank" rel="noopener noreferrer" class="text-sm font-bold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 transition flex items-center gap-2">
+          <span>🗺️</span> Open Google Maps
+        </a>
+        <button id="addToCalBtn" class="text-sm font-bold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 transition flex items-center gap-2">
+          <span>🗓️</span> Add to Calendar (.ics)
+        </button>
       </div>
     </section>
 
-    <!-- RSVP Section (Guest Submission) -->
-    <section id="rsvpAnchor" class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h2 class="text-lg sm:text-xl font-bold font-ninja text-white">RSVP for Your Ninja</h2>
-          <p class="text-xs text-slate-400">Select your child's name to let Hudson know if they can attend.</p>
-        </div>
-        <span class="text-xs px-2.5 py-1 rounded-md bg-amber-400/10 text-amber-300 border border-amber-400/20 font-mono">
-          Oct 17
-        </span>
+    <!-- RSVP Section -->
+    <section class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="text-xl sm:text-2xl font-bold font-ninja text-white">RSVP for Your Ninja</h2>
+        <p class="text-sm text-slate-300 mt-1">Select your child's name to let Hudson know if they can battle!</p>
       </div>
 
-      <div class="p-3 mb-5 rounded-xl bg-blue-950/40 border border-blue-800/30 flex items-start gap-2.5 text-xs text-blue-200">
-        <span class="text-sm">🔒</span>
-        <span><strong>Guest Privacy Note:</strong> Food preferences, allergy notes, and personal messages to Hudson are kept strictly private to the host family.</span>
+      <div class="p-3.5 rounded-xl bg-blue-950/40 border border-blue-800/40 flex items-start gap-2.5 text-xs sm:text-sm text-blue-200">
+        <span class="text-base">🔒</span>
+        <span><strong>Guest Privacy Note:</strong> Food preferences, allergies, and personal notes are kept strictly private to the host family.</span>
       </div>
 
-      <form id="rsvpForm" class="space-y-4">
+      <form id="rsvpForm" class="space-y-5">
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+          <label class="block text-sm font-bold uppercase tracking-wider text-slate-200 mb-2">
             Child's Name <span class="text-red-400">*</span>
           </label>
-          <select id="rsvpKidSelect" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 transition">
-            <option value="" disabled selected>Select from class roster...</option>
-            <!-- Generated alphabetically via JavaScript -->
+          <select id="rsvpKidSelect" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-amber-400">
+            <option value="" disabled selected>Select child from class roster...</option>
           </select>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-            Attendance <span class="text-red-400">*</span>
+          <label class="block text-sm font-bold uppercase tracking-wider text-slate-200 mb-2">
+            Will they attend? <span class="text-red-400">*</span>
           </label>
           <div class="grid grid-cols-2 gap-3">
-            <label class="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-700 bg-slate-950/60 cursor-pointer hover:border-emerald-500/50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-950/20 transition">
-              <input type="radio" name="attendanceStatus" value="Attending" required class="accent-emerald-500">
-              <span class="text-xs font-medium text-emerald-300">⚔️ Ready to Battle!</span>
+            <label class="flex items-center justify-center gap-2.5 p-3.5 rounded-xl border border-slate-700 bg-slate-950/70 cursor-pointer hover:border-emerald-500 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-950/30 transition">
+              <input type="radio" name="attendanceStatus" value="Attending" required class="accent-emerald-500 w-4 h-4">
+              <span class="text-sm sm:text-base font-bold text-emerald-300">⚔️ Ready to Battle!</span>
             </label>
-            <label class="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-700 bg-slate-950/60 cursor-pointer hover:border-slate-500 has-[:checked]:border-slate-500 has-[:checked]:bg-slate-800/40 transition">
-              <input type="radio" name="attendanceStatus" value="Declined" required class="accent-slate-400">
-              <span class="text-xs font-medium text-slate-400">Can't Make It</span>
+            <label class="flex items-center justify-center gap-2.5 p-3.5 rounded-xl border border-slate-700 bg-slate-950/70 cursor-pointer hover:border-slate-500 has-[:checked]:border-slate-500 has-[:checked]:bg-slate-800/50 transition">
+              <input type="radio" name="attendanceStatus" value="Declined" required class="accent-slate-400 w-4 h-4">
+              <span class="text-sm sm:text-base font-bold text-slate-300">Can't Make It</span>
             </label>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs text-slate-400 mb-1">
-              Dietary Restrictions / Allergies <span class="text-slate-500">(Private to host)</span>
+            <label class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5">
+              Dietary Restrictions / Allergies <span class="text-slate-400 font-normal">(Private)</span>
             </label>
-            <input type="text" id="rsvpDietary" placeholder="e.g. Nut allergy, gluten-free, dairy..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+            <input type="text" id="rsvpDietary" placeholder="e.g. Nut allergy, gluten free..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
           </div>
           <div>
-            <label class="block text-xs text-slate-400 mb-1">
-              Parent Contact <span class="text-slate-500">(Phone or Email)</span>
+            <label class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5">
+              Parent Contact <span class="text-slate-400 font-normal">(Phone or Email)</span>
             </label>
-            <input type="text" id="rsvpContact" placeholder="For party updates..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+            <input type="text" id="rsvpContact" placeholder="For party updates..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs text-slate-400 mb-1">
-            Birthday Note for Hudson <span class="text-slate-500">(Private)</span>
+          <label class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5">
+            Birthday Wish for Hudson <span class="text-slate-400 font-normal">(Private)</span>
           </label>
-          <textarea id="rsvpNote" rows="2" placeholder="Send Hudson a birthday wish..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
+          <input type="text" id="rsvpNote" placeholder="Send Hudson a note..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
         </div>
 
-        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-amber-500 text-white font-semibold text-xs tracking-wider uppercase hover:opacity-95 active:scale-[0.99] transition shadow-lg shadow-red-600/20">
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-bold text-sm sm:text-base tracking-wider uppercase transition shadow-lg shadow-red-600/30 active:scale-[0.99]">
           Submit RSVP
         </button>
       </form>
     </section>
 
-    <!-- Public Guest View: Class Roster -->
-    <section id="guestRosterSection" class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <!-- Public Guest View: Alphabetical Roster -->
+    <section class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
-          <h2 class="text-lg font-bold font-ninja text-white">Ninja Class Roster</h2>
-          <p class="text-xs text-slate-400">Alphabetical list of invitees and attendance status.</p>
+          <h2 class="text-xl font-bold font-ninja text-white">Ninja Class Roster (13)</h2>
+          <p class="text-xs sm:text-sm text-slate-300 mt-0.5">Alphabetical list of invitees and attendance status.</p>
         </div>
-
-        <!-- Filter Tabs -->
-        <div class="flex items-center gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs">
-          <button class="filter-btn px-2.5 py-1 rounded-lg bg-amber-400 text-slate-950 font-semibold" data-filter="all">All (13)</button>
-          <button class="filter-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white" data-filter="Attending">Attending</button>
-          <button class="filter-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white" data-filter="Awaiting">Pending</button>
+        <div class="flex gap-1.5 text-xs sm:text-sm bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+          <button class="filter-btn px-3 py-1 rounded-lg bg-amber-400 text-slate-950 font-bold" data-filter="all">All (13)</button>
+          <button class="filter-btn px-3 py-1 rounded-lg text-slate-400 hover:text-white" data-filter="Attending">Attending</button>
+          <button class="filter-btn px-3 py-1 rounded-lg text-slate-400 hover:text-white" data-filter="Awaiting">Pending</button>
         </div>
       </div>
 
-      <!-- Alphabetical Guests Grid -->
-      <div id="guestCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        <!-- Injected via JavaScript -->
+      <div id="guestCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- Injected alphabetically via JavaScript -->
       </div>
     </section>
 
-    <!-- Host Management Dashboard (Password Protected) -->
+    <!-- Private Host HQ Dashboard -->
     <section id="hostDashboardSection" class="hidden bg-slate-950 border-2 border-amber-500/40 rounded-3xl p-6 sm:p-8 space-y-6">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
         <div>
-          <div class="inline-flex items-center gap-1 text-[11px] font-ninja tracking-widest text-amber-400 uppercase">
-            <span>🛡️</span> Host Control Center
-          </div>
-          <h2 class="text-xl font-bold font-serif-luxury text-white">Private Party HQ</h2>
+          <span class="text-xs font-ninja tracking-widest text-amber-400 uppercase font-bold">Host Control Center</span>
+          <h2 class="text-2xl font-bold font-serif-luxury text-white">Private Party HQ</h2>
         </div>
-        <button id="exitHostBtn" class="text-xs px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-300">
+        <button id="exitHostBtn" class="text-xs sm:text-sm px-3.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-300">
           Exit Host View
         </button>
       </div>
 
-      <!-- Quick Metrics -->
+      <!-- Metrics -->
       <div class="grid grid-cols-3 gap-3">
-        <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 text-center">
-          <div id="metricAttending" class="text-xl sm:text-2xl font-bold text-emerald-400">0</div>
-          <div class="text-[11px] text-slate-400 uppercase font-medium">Attending</div>
+        <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-center">
+          <div id="metricAttending" class="text-2xl sm:text-3xl font-bold text-emerald-400">0</div>
+          <div class="text-xs text-slate-400 uppercase font-bold mt-1">Attending</div>
         </div>
-        <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 text-center">
-          <div id="metricPending" class="text-xl sm:text-2xl font-bold text-amber-400">13</div>
-          <div class="text-[11px] text-slate-400 uppercase font-medium">Awaiting</div>
+        <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-center">
+          <div id="metricPending" class="text-2xl sm:text-3xl font-bold text-amber-400">13</div>
+          <div class="text-xs text-slate-400 uppercase font-bold mt-1">Awaiting</div>
         </div>
-        <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 text-center">
-          <div id="metricDeclined" class="text-xl sm:text-2xl font-bold text-slate-400">0</div>
-          <div class="text-[11px] text-slate-400 uppercase font-medium">Declined</div>
-        </div>
-      </div>
-
-      <!-- Private Dietary & Allergen Panel -->
-      <div class="bg-slate-900/90 rounded-2xl p-4 border border-amber-500/20 space-y-2">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-semibold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
-            <span>⚠️</span> Dietary Restrictions & Allergies
-          </h3>
-          <span class="text-[11px] text-slate-400">Host Eyes Only</span>
-        </div>
-        <div id="hostDietaryList" class="space-y-1 text-xs">
-          <!-- Injected via JavaScript -->
+        <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-center">
+          <div id="metricDeclined" class="text-2xl sm:text-3xl font-bold text-slate-400">0</div>
+          <div class="text-xs text-slate-400 uppercase font-bold mt-1">Declined</div>
         </div>
       </div>
 
-      <!-- Master Roster Table -->
+      <!-- Private Dietary Panel -->
+      <div class="bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-amber-400/20 space-y-2">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-amber-300 flex items-center gap-2">
+          <span>⚠️</span> Dietary Restrictions & Allergies
+        </h3>
+        <div id="hostDietaryList" class="space-y-1.5 text-sm"></div>
+      </div>
+
+      <!-- Master Roster Table with Inline Correction Controls -->
       <div class="overflow-x-auto rounded-2xl border border-slate-800">
-        <table class="w-full text-left text-xs">
-          <thead class="bg-slate-900 text-slate-400 font-semibold border-b border-slate-800">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900 text-slate-300 font-bold border-b border-slate-800">
             <tr>
-              <th class="p-3">Child Name (A-Z)</th>
-              <th class="p-3">Status</th>
-              <th class="p-3">Dietary / Notes</th>
-              <th class="p-3">Contact</th>
-              <th class="p-3 text-right">Quick Action</th>
+              <th class="p-3.5">Child Name</th>
+              <th class="p-3.5">Status</th>
+              <th class="p-3.5">Dietary / Notes</th>
+              <th class="p-3.5">Contact</th>
+              <th class="p-3.5 text-right">Host Action</th>
             </tr>
           </thead>
-          <tbody id="hostTableBody" class="divide-y divide-slate-800/60 bg-slate-950/40">
-            <!-- Injected via JavaScript -->
-          </tbody>
+          <tbody id="hostTableBody" class="divide-y divide-slate-800/80 bg-slate-950/60"></tbody>
         </table>
       </div>
 
-      <!-- Host Action Controls -->
-      <div class="flex flex-wrap gap-2 pt-2">
-        <button id="exportCsvBtn" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
-          📥 Export Roster to CSV
+      <div class="flex gap-3">
+        <button id="exportCsvBtn" class="text-sm font-bold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
+          📥 Export CSV
         </button>
-        <button id="copySummaryBtn" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
-          📋 Copy Summary Text
+        <button id="copySummaryBtn" class="text-sm font-bold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
+          📋 Copy Headcount
         </button>
       </div>
     </section>
 
   </main>
 
-  <!-- JavaScript Implementation -->
   <script>
-    // Initial 13 Invited Kids in Strict Alphabetical Order
+    // Initial 13 Kids in Strict Alphabetical Order
     const INITIAL_GUESTS = [
       { name: "Arthur", status: "Awaiting", dietary: "", contact: "", note: "" },
       { name: "Cleo", status: "Awaiting", dietary: "", contact: "", note: "" },
@@ -372,10 +356,9 @@
       { name: "Waleska", status: "Awaiting", dietary: "", contact: "", note: "" }
     ];
 
-    const STORAGE_KEY = "hudson_6th_bday_guests_v2";
-    const HOST_PIN = "1017"; // Oct 17 PIN
+    const STORAGE_KEY = "hudson_6th_bday_guests_v4";
+    const HOST_PIN = "1017";
 
-    // Load from localStorage or initialize
     function getGuests() {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (!stored) {
@@ -384,7 +367,6 @@
       }
       try {
         const parsed = JSON.parse(stored);
-        // Ensure alphabetical sort
         return parsed.sort((a, b) => a.name.localeCompare(b.name));
       } catch (e) {
         return INITIAL_GUESTS;
@@ -392,7 +374,6 @@
     }
 
     function saveGuests(guests) {
-      // Sort alphabetically before storing
       guests.sort((a, b) => a.name.localeCompare(b.name));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
       renderApp();
@@ -400,8 +381,8 @@
 
     let currentFilter = "all";
     let isHostMode = false;
+    let pendingSubmission = null;
 
-    // Render Public Guest Grid (Hides dietary & notes)
     function renderGuestCards() {
       const guests = getGuests();
       const grid = document.getElementById("guestCardsGrid");
@@ -412,21 +393,16 @@
         return g.status === currentFilter;
       });
 
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-500">No ninjas found in this tab.</div>`;
-        return;
-      }
-
       filtered.forEach(guest => {
         const card = document.createElement("div");
-        card.className = "p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 flex items-center justify-between";
+        card.className = "p-4 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between";
 
-        let badgeClass = "bg-slate-800/60 text-slate-400 border-slate-700";
+        let badgeClass = "bg-slate-800 text-slate-300 border-slate-700";
         let statusText = "Awaiting";
         let icon = "⏳";
 
         if (guest.status === "Attending") {
-          badgeClass = "bg-emerald-950/60 text-emerald-300 border-emerald-800/60";
+          badgeClass = "bg-emerald-950/80 text-emerald-300 border-emerald-700";
           statusText = "Ready";
           icon = "⚔️";
         } else if (guest.status === "Declined") {
@@ -438,19 +414,19 @@
         const isHudson = guest.name === "Hudson";
 
         card.innerHTML = `
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-300">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-sm font-bold text-slate-200">
               ${guest.name.charAt(0)}
             </div>
             <div>
-              <div class="text-xs font-semibold text-white flex items-center gap-1">
+              <div class="text-base font-bold text-white flex items-center gap-1.5">
                 ${guest.name}
-                ${isHudson ? '<span class="text-amber-400 text-[10px]" title="Birthday Boy">⭐</span>' : ''}
+                ${isHudson ? '<span class="text-amber-400 text-sm">⭐</span>' : ''}
               </div>
-              <div class="text-[10px] text-slate-400">Invited Ninja</div>
+              <div class="text-xs text-slate-400">Invited Ninja</div>
             </div>
           </div>
-          <span class="text-[11px] px-2.5 py-1 rounded-full border ${badgeClass} font-medium flex items-center gap-1">
+          <span class="text-xs font-bold px-3 py-1 rounded-full border ${badgeClass} flex items-center gap-1.5">
             <span>${icon}</span>
             <span>${statusText}</span>
           </span>
@@ -459,13 +435,12 @@
       });
     }
 
-    // Populate the dropdown selector in alphabetical order
     function renderRsvpDropdown() {
       const guests = getGuests();
       const select = document.getElementById("rsvpKidSelect");
       const currentSelected = select.value;
       
-      select.innerHTML = '<option value="" disabled selected>Select from class roster...</option>';
+      select.innerHTML = '<option value="" disabled selected>Select child from class roster...</option>';
       guests.forEach(g => {
         const opt = document.createElement("option");
         opt.value = g.name;
@@ -473,16 +448,11 @@
         select.appendChild(opt);
       });
 
-      if (currentSelected) {
-        select.value = currentSelected;
-      }
+      if (currentSelected) select.value = currentSelected;
     }
 
-    // Render Host HQ Dashboard
     function renderHostDashboard() {
       const guests = getGuests();
-      
-      // Update metrics
       const attending = guests.filter(g => g.status === "Attending").length;
       const declined = guests.filter(g => g.status === "Declined").length;
       const pending = guests.filter(g => g.status === "Awaiting").length;
@@ -491,60 +461,66 @@
       document.getElementById("metricPending").textContent = pending;
       document.getElementById("metricDeclined").textContent = declined;
 
-      // Filter dietary restrictions list
       const dietaryContainer = document.getElementById("hostDietaryList");
       const guestsWithDietary = guests.filter(g => g.dietary && g.dietary.trim() !== "");
       
       if (guestsWithDietary.length === 0) {
-        dietaryContainer.innerHTML = `<div class="text-slate-500 italic">No dietary restrictions submitted yet.</div>`;
+        dietaryContainer.innerHTML = `<div class="text-slate-400 italic">No dietary restrictions submitted yet.</div>`;
       } else {
         dietaryContainer.innerHTML = guestsWithDietary.map(g => `
-          <div class="flex items-center justify-between p-2 rounded-lg bg-slate-950/70 border border-slate-800">
-            <span class="font-medium text-slate-200">${g.name}:</span>
-            <span class="text-amber-400 font-mono">${g.dietary}</span>
+          <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950 border border-slate-800">
+            <span class="font-bold text-slate-200">${g.name}:</span>
+            <span class="text-amber-400 font-mono font-medium">${g.dietary}</span>
           </div>
         `).join("");
       }
 
-      // Master Table
       const tbody = document.getElementById("hostTableBody");
-      tbody.innerHTML = guests.map((guest, idx) => `
-        <tr class="hover:bg-slate-900/50">
-          <td class="p-3 font-semibold text-white">${guest.name}</td>
-          <td class="p-3">
-            <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${
-              guest.status === 'Attending' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
+      tbody.innerHTML = guests.map((guest) => `
+        <tr class="hover:bg-slate-900/60">
+          <td class="p-3.5 font-bold text-white">${guest.name}</td>
+          <td class="p-3.5">
+            <span class="px-2.5 py-1 rounded text-xs font-bold ${
+              guest.status === 'Attending' ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' :
               guest.status === 'Declined' ? 'bg-slate-800 text-slate-400' :
-              'bg-amber-950 text-amber-400 border border-amber-800'
+              'bg-amber-950 text-amber-300 border border-amber-800'
             }">
               ${guest.status}
             </span>
           </td>
-          <td class="p-3 text-slate-300">
-            ${guest.dietary ? `<div class="text-amber-300 font-medium">⚠️ ${guest.dietary}</div>` : ''}
+          <td class="p-3.5 text-slate-200">
+            ${guest.dietary ? `<div class="text-amber-300 font-semibold">⚠️ ${guest.dietary}</div>` : ''}
             ${guest.note ? `<div class="text-slate-400 italic">"${guest.note}"</div>` : ''}
             ${!guest.dietary && !guest.note ? '<span class="text-slate-600">—</span>' : ''}
           </td>
-          <td class="p-3 text-slate-400">${guest.contact || '<span class="text-slate-600">—</span>'}</td>
-          <td class="p-3 text-right">
-            <button onclick="toggleGuestStatus('${guest.name}')" class="text-[11px] px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
-              Toggle
+          <td class="p-3.5 text-slate-300">${guest.contact || '<span class="text-slate-600">—</span>'}</td>
+          <td class="p-3.5 text-right">
+            <button onclick="resetGuest('${guest.name}')" class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
+              Reset / Fix
             </button>
           </td>
         </tr>
       `).join("");
     }
 
-    // Toggle guest status for quick host edits
-    window.toggleGuestStatus = function(name) {
+    // Host reset/correction function
+    window.resetGuest = function(name) {
       const guests = getGuests();
       const guest = guests.find(g => g.name === name);
       if (!guest) return;
 
-      if (guest.status === "Awaiting") guest.status = "Attending";
-      else if (guest.status === "Attending") guest.status = "Declined";
-      else guest.status = "Awaiting";
+      const choice = prompt(`Correcting status for ${name}:\nType 'attending', 'declined', or 'reset':`, guest.status.toLowerCase());
+      if (!choice) return;
 
+      const val = choice.toLowerCase().trim();
+      if (val === 'attending') guest.status = "Attending";
+      else if (val === 'declined') guest.status = "Declined";
+      else if (val === 'reset') {
+        guest.status = "Awaiting";
+        guest.dietary = "";
+        guest.contact = "";
+        guest.note = "";
+      }
       saveGuests(guests);
     };
 
@@ -554,7 +530,25 @@
       if (isHostMode) renderHostDashboard();
     }
 
-    // Handle RSVP submission
+    // Confirmation Modal Handlers
+    const confirmModal = document.getElementById("confirmModal");
+    const confirmModalText = document.getElementById("confirmModalText");
+    const modalConfirmBtn = document.getElementById("modalConfirmBtn");
+    const modalCancelBtn = document.getElementById("modalCancelBtn");
+
+    modalCancelBtn.addEventListener("click", () => {
+      confirmModal.classList.add("hidden");
+      pendingSubmission = null;
+    });
+
+    modalConfirmBtn.addEventListener("click", () => {
+      confirmModal.classList.add("hidden");
+      if (pendingSubmission) {
+        executeRsvp(pendingSubmission);
+        pendingSubmission = null;
+      }
+    });
+
     document.getElementById("rsvpForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const kidName = document.getElementById("rsvpKidSelect").value;
@@ -563,11 +557,22 @@
       const contact = document.getElementById("rsvpContact").value.trim();
       const note = document.getElementById("rsvpNote").value.trim();
 
-      if (!kidName || !status) {
-        alert("Please select your child's name and attendance status.");
-        return;
-      }
+      if (!kidName || !status) return;
 
+      const guests = getGuests();
+      const existing = guests.find(g => g.name === kidName);
+      const submissionData = { kidName, status, dietary, contact, note };
+
+      if (existing && existing.status !== "Awaiting") {
+        pendingSubmission = submissionData;
+        confirmModalText.innerHTML = `An RSVP for <strong>${kidName}</strong> was already submitted.<br><br>Are you sure you want to update this?`;
+        confirmModal.classList.remove("hidden");
+      } else {
+        executeRsvp(submissionData);
+      }
+    });
+
+    function executeRsvp({ kidName, status, dietary, contact, note }) {
       const guests = getGuests();
       const target = guests.find(g => g.name === kidName);
 
@@ -578,32 +583,21 @@
         if (note) target.note = note;
         saveGuests(guests);
 
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.7 }
-        });
-
-        alert(`Thank you! RSVP recorded for ${kidName}.`);
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.7 } });
+        alert(`RSVP saved for ${kidName}!`);
         document.getElementById("rsvpForm").reset();
       }
-    });
+    }
 
     // Envelope Screen Logic
     const envelopeScreen = document.getElementById("envelopeScreen");
     const breakSealBtn = document.getElementById("breakSealBtn");
     const envelopeToggleBtn = document.getElementById("envelopeToggleBtn");
 
-    function openEnvelope() {
-      confetti({
-        particleCount: 100,
-        spread: 80,
-        origin: { y: 0.6 }
-      });
+    breakSealBtn.addEventListener("click", () => {
+      confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
       envelopeScreen.classList.add("opacity-0", "pointer-events-none");
-    }
-
-    breakSealBtn.addEventListener("click", openEnvelope);
+    });
     envelopeToggleBtn.addEventListener("click", () => {
       envelopeScreen.classList.remove("opacity-0", "pointer-events-none");
     });
@@ -644,13 +638,13 @@
 
     exitHostBtn.addEventListener("click", () => setHostMode(false));
 
-    // Filter tabs
+    // Filters
     document.querySelectorAll(".filter-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".filter-btn").forEach(b => {
-          b.className = "filter-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white";
+          b.className = "filter-btn px-3 py-1 rounded-lg text-slate-400 hover:text-white";
         });
-        btn.className = "filter-btn px-2.5 py-1 rounded-lg bg-amber-400 text-slate-950 font-semibold";
+        btn.className = "filter-btn px-3 py-1 rounded-lg bg-amber-400 text-slate-950 font-bold";
         currentFilter = btn.dataset.filter;
         renderGuestCards();
       });
@@ -682,7 +676,7 @@
       document.body.removeChild(a);
     });
 
-    // Host CSV Export
+    // CSV Export
     document.getElementById("exportCsvBtn")?.addEventListener("click", () => {
       const guests = getGuests();
       let csv = "Name,Status,Dietary Restrictions,Contact,Note\n";
@@ -696,7 +690,7 @@
       a.click();
     });
 
-    // Host Text Summary Copy
+    // Text Summary Copy
     document.getElementById("copySummaryBtn")?.addEventListener("click", () => {
       const guests = getGuests();
       const attending = guests.filter(g => g.status === "Attending").map(g => g.name);
@@ -706,7 +700,6 @@
       navigator.clipboard.writeText(summary).then(() => alert("Headcount summary copied to clipboard!"));
     });
 
-    // Initialize
     renderApp();
   </script>
 </body>
