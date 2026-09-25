@@ -70,7 +70,7 @@
         
         <!-- Large Visual Character Graphic -->
         <div class="flex justify-center -mt-2 mb-3">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-28 h-28 object-contain drop-shadow-2xl poke-float" onerror="this.src='https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png'">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-28 h-28 object-contain drop-shadow-2xl poke-float">
         </div>
 
         <div class="space-y-4">
@@ -198,6 +198,12 @@
         </div>
       </div>
 
+      <!-- Food Announcement: Pizza & Ice Cream Cake -->
+      <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-400/30 text-sm sm:text-base text-amber-200 flex items-center justify-center gap-2 font-medium">
+        <span class="text-xl">🍕🎂</span>
+        <span><strong>Pizza & ice cream cake</strong> will be served!</span>
+      </div>
+
       <!-- Grip Socks Highlight Badge -->
       <div class="p-3.5 rounded-2xl bg-red-950/40 border border-red-500/30 text-sm sm:text-base text-red-200 flex items-center justify-center gap-2 font-medium">
         <span class="text-xl">🧦</span>
@@ -253,19 +259,11 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5">
-              Dietary Restrictions / Allergies <span class="text-slate-400 font-normal">(Private)</span>
-            </label>
-            <input type="text" id="rsvpDietary" placeholder="e.g. Nut allergy, gluten free..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
-          </div>
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5">
-              Parent Contact <span class="text-slate-400 font-normal">(Phone or Email)</span>
-            </label>
-            <input type="text" id="rsvpContact" placeholder="For party updates..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
-          </div>
+        <div>
+          <label class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5">
+            Dietary Restrictions / Allergies <span class="text-slate-400 font-normal">(Private)</span>
+          </label>
+          <input type="text" id="rsvpDietary" placeholder="e.g. Nut allergy, gluten free, dairy free..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
         </div>
 
         <div>
@@ -344,7 +342,6 @@
               <th class="p-3.5">Child Name</th>
               <th class="p-3.5">Status</th>
               <th class="p-3.5">Dietary / Notes</th>
-              <th class="p-3.5">Contact</th>
               <th class="p-3.5 text-right">Host Action</th>
             </tr>
           </thead>
@@ -365,24 +362,23 @@
   </main>
 
   <script>
-    // Corrected to "Eamonn" in alphabetical order
     const INITIAL_GUESTS = [
-      { name: "Arthur", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Cleo", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Covey", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Eamonn", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Henri", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Hudson", status: "Attending", dietary: "Birthday Ninja ⭐", contact: "Host", note: "Let's Battle!" },
-      { name: "Jemel", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "John", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Miles Amato", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Miles Thomas", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Rafa", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Rye", status: "Awaiting", dietary: "", contact: "", note: "" },
-      { name: "Waleska", status: "Awaiting", dietary: "", contact: "", note: "" }
+      { name: "Arthur", status: "Awaiting", dietary: "", note: "" },
+      { name: "Cleo", status: "Awaiting", dietary: "", note: "" },
+      { name: "Covey", status: "Awaiting", dietary: "", note: "" },
+      { name: "Eamonn", status: "Awaiting", dietary: "", note: "" },
+      { name: "Henri", status: "Awaiting", dietary: "", note: "" },
+      { name: "Hudson", status: "Attending", dietary: "Birthday Ninja ⭐", note: "Let's Battle!" },
+      { name: "Jemel", status: "Awaiting", dietary: "", note: "" },
+      { name: "John", status: "Awaiting", dietary: "", note: "" },
+      { name: "Miles Amato", status: "Awaiting", dietary: "", note: "" },
+      { name: "Miles Thomas", status: "Awaiting", dietary: "", note: "" },
+      { name: "Rafa", status: "Awaiting", dietary: "", note: "" },
+      { name: "Rye", status: "Awaiting", dietary: "", note: "" },
+      { name: "Waleska", status: "Awaiting", dietary: "", note: "" }
     ];
 
-    const STORAGE_KEY = "hudson_6th_bday_guests_v7";
+    const STORAGE_KEY = "hudson_6th_bday_guests_v8";
     const HOST_PIN = "1017";
 
     function getGuests() {
@@ -519,7 +515,6 @@
             ${guest.note ? `<div class="text-slate-400 italic">"${guest.note}"</div>` : ''}
             ${!guest.dietary && !guest.note ? '<span class="text-slate-600">—</span>' : ''}
           </td>
-          <td class="p-3.5 text-slate-300">${guest.contact || '<span class="text-slate-600">—</span>'}</td>
           <td class="p-3.5 text-right">
             <button onclick="resetGuest('${guest.name}')" class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
               Reset / Fix
@@ -543,7 +538,6 @@
       else if (val === 'reset') {
         guest.status = "Awaiting";
         guest.dietary = "";
-        guest.contact = "";
         guest.note = "";
       }
       saveGuests(guests);
@@ -578,14 +572,13 @@
       const kidName = document.getElementById("rsvpKidSelect").value;
       const status = document.querySelector('input[name="attendanceStatus"]:checked')?.value;
       const dietary = document.getElementById("rsvpDietary").value.trim();
-      const contact = document.getElementById("rsvpContact").value.trim();
       const note = document.getElementById("rsvpNote").value.trim();
 
       if (!kidName || !status) return;
 
       const guests = getGuests();
       const existing = guests.find(g => g.name === kidName);
-      const submissionData = { kidName, status, dietary, contact, note };
+      const submissionData = { kidName, status, dietary, note };
 
       if (existing && existing.status !== "Awaiting") {
         pendingSubmission = submissionData;
@@ -596,14 +589,13 @@
       }
     });
 
-    function executeRsvp({ kidName, status, dietary, contact, note }) {
+    function executeRsvp({ kidName, status, dietary, note }) {
       const guests = getGuests();
       const target = guests.find(g => g.name === kidName);
 
       if (target) {
         target.status = status;
         if (dietary) target.dietary = dietary;
-        if (contact) target.contact = contact;
         if (note) target.note = note;
         saveGuests(guests);
 
@@ -678,7 +670,7 @@
         "PRODID:-//Hudson 6th Birthday//EN",
         "BEGIN:VEVENT",
         "SUMMARY:Hudson's 6th Birthday Party (Ferox Ninja DUMBO)",
-        "DESCRIPTION:Hudson's 6th Birthday Ninja Warrior & Pokémon Training Session! Grip socks provided upon arrival.",
+        "DESCRIPTION:Hudson's 6th Birthday Ninja Warrior & Pokémon Training Session! Pizza and ice cream cake will be served. Grip socks provided upon arrival.",
         "LOCATION:Ferox Athletics, 65 Jay St, Brooklyn, NY 11201",
         "DTSTART:20261017T140000Z",
         "DTEND:20261017T160000Z",
@@ -698,9 +690,9 @@
 
     document.getElementById("exportCsvBtn")?.addEventListener("click", () => {
       const guests = getGuests();
-      let csv = "Name,Status,Dietary Restrictions,Contact,Note\n";
+      let csv = "Name,Status,Dietary Restrictions,Note\n";
       guests.forEach(g => {
-        csv += `"${g.name}","${g.status}","${g.dietary || ''}","${g.contact || ''}","${g.note || ''}"\n`;
+        csv += `"${g.name}","${g.status}","${g.dietary || ''}","${g.note || ''}"\n`;
       });
       const blob = new Blob([csv], { type: "text/csv" });
       const a = document.createElement("a");
