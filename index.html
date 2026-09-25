@@ -48,7 +48,6 @@
       getFirestore, 
       collection, 
       doc, 
-      getDocs, 
       setDoc, 
       updateDoc, 
       onSnapshot 
@@ -90,7 +89,6 @@
       // Set up real-time listener
       onSnapshot(guestsRef, async (snapshot) => {
         if (snapshot.empty) {
-          // Initialize roster in cloud Firestore if database is fresh
           for (const name of INITIAL_ROSTER) {
             await setDoc(doc(db, "guests", name), {
               name: name,
@@ -112,7 +110,6 @@
         renderApp();
       }, (error) => {
         console.error("Firestore sync error:", error);
-        alert("Notice: Could not sync with cloud database. Make sure your Firestore security rules allow read/write in Test Mode.");
       });
     }
 
@@ -258,13 +255,38 @@
 
       tbody.innerHTML = guestsData.map((guest) => {
         const guestLink = `${baseUrl}?guest=${encodeURIComponent(guest.name)}`;
+        
+        const emailSubject = encodeURIComponent(`⚡ Hudson's 6th Birthday Mission: Invite for ${guest.name}!`);
+        const emailBody = encodeURIComponent(
+`Hi!
+
+Hudson is turning 6! We would love for ${guest.name} to join us for a 2-hour private Pokémon battle and Ninja Warrior obstacle course celebration at Ferox Ninja Playground in DUMBO!
+
+📅 Date: Saturday, October 17
+⏰ Time: 10:00 AM – 12:00 PM
+📍 Location: Ferox Athletics, 65 Jay St, Brooklyn, NY 11201
+🍕 Food: Pizza and ice cream cake will be served!
+🧦 Grip socks: Provided by Ferox upon arrival.
+
+Please use ${guest.name}'s personalized invitation link to RSVP:
+${guestLink}
+
+Hope you can make it!
+
+Best,
+The Fried-Chung Family`
+        );
+
         return `
           <tr class="hover:bg-slate-900/60">
             <td class="p-3.5 font-bold text-white">
-              ${guest.name}
-              <div class="mt-1">
-                <button onclick="navigator.clipboard.writeText('${guestLink}'); alert('Copied personal link for ${guest.name}!');" class="text-[11px] text-amber-400 hover:text-amber-300 underline font-normal flex items-center gap-1">
-                  <span>📋</span> Copy ${guest.name}'s Link
+              <div class="text-base">${guest.name}</div>
+              <div class="mt-1.5 flex flex-wrap items-center gap-2 font-normal">
+                <a href="mailto:?subject=${emailSubject}&body=${emailBody}" class="text-xs px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-400/40 hover:bg-amber-500/30 flex items-center gap-1 font-semibold transition">
+                  <span>✉️</span> Draft Email
+                </a>
+                <button onclick="navigator.clipboard.writeText('${guestLink}'); alert('Copied personal link for ${guest.name}!');" class="text-xs px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 flex items-center gap-1 font-semibold transition">
+                  <span>📋</span> Copy Link
                 </button>
               </div>
             </td>
@@ -483,7 +505,6 @@
     <div class="w-full max-w-md relative">
       <div class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-400/40 rounded-3xl p-8 sm:p-10 text-center shadow-2xl overflow-hidden">
         
-        <!-- Large Visual Character Graphic -->
         <div class="flex justify-center -mt-2 mb-3">
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-28 h-28 object-contain drop-shadow-2xl poke-float">
         </div>
@@ -498,7 +519,6 @@
           </h1>
           <p id="envelopeSubHeading" class="text-sm text-amber-400 font-ninja tracking-wider uppercase font-semibold">Pokémon & Ninja Academy</p>
 
-          <!-- Pokéball Wax Seal Button -->
           <div class="py-3 flex flex-col items-center justify-center">
             <button id="breakSealBtn" class="wax-seal group relative w-24 h-24 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center border-4 border-amber-400 cursor-pointer focus:outline-none">
               <div class="absolute inset-0 rounded-full flex flex-col overflow-hidden pointer-events-none opacity-90">
@@ -527,20 +547,19 @@
   <!-- Main Content Layout -->
   <main class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
 
-    <!-- Personalized VIP Guest Welcome Bar (Appears when using ?guest=Arthur) -->
+    <!-- Personalized VIP Guest Welcome Bar -->
     <div id="personalizedBanner" class="hidden bg-gradient-to-r from-red-900/60 to-amber-900/60 border border-amber-400/50 rounded-2xl p-4 text-center">
       <span class="text-xs font-ninja tracking-widest text-amber-300 uppercase font-bold">Personalized Roster Link</span>
       <h2 id="personalizedHeading" class="text-lg sm:text-xl font-bold text-white mt-0.5">Special Mission For: Ninja Guest</h2>
     </div>
 
-    <!-- Stationery Hero Card With Pikachu and Greninja -->
+    <!-- Hero Card -->
     <section class="relative bg-gradient-to-b from-slate-900/95 to-slate-950 border-2 gold-border rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-6 overflow-hidden">
       
-      <!-- Glow background -->
       <div class="absolute -top-10 -right-10 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <!-- VISUAL ARTWORK: PIKACHU & GRENINJA BATTLE BANNER -->
+      <!-- VISUAL ARTWORK -->
       <div class="flex items-center justify-around gap-2 pt-2 px-2">
         <div class="flex flex-col items-center bg-slate-950/70 border border-amber-400/30 rounded-2xl p-3 w-36 sm:w-44 shadow-lg">
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-24 sm:w-28 h-24 sm:h-28 object-contain poke-float drop-shadow-[0_8px_16px_rgba(250,204,21,0.3)]">
@@ -727,12 +746,12 @@
         <div id="hostDietaryList" class="space-y-1.5 text-sm"></div>
       </div>
 
-      <!-- Master Roster Table With 1-Click Link Generators -->
+      <!-- Master Roster Table With 1-Click Link Generators & Email Drafters -->
       <div class="overflow-x-auto rounded-2xl border border-slate-800">
         <table class="w-full text-left text-sm">
           <thead class="bg-slate-900 text-slate-300 font-bold border-b border-slate-800">
             <tr>
-              <th class="p-3.5">Child & Personal Link</th>
+              <th class="p-3.5">Child & Invites</th>
               <th class="p-3.5">Status</th>
               <th class="p-3.5">Dietary / Notes</th>
               <th class="p-3.5 text-right">Host Actions</th>
