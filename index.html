@@ -287,59 +287,60 @@
       }).join("");
     }
 
-    // Rich HTML Clipboard Generator for Gmail (Bulletproof Email Table Architecture)
+    // Rich HTML Clipboard Generator with Gmail Dark-Mode Inversion Shields
     window.copyHtmlInvite = async function(childName) {
       const baseUrl = window.location.origin + window.location.pathname;
       const guestLink = `${baseUrl}?guest=${encodeURIComponent(childName)}`;
 
       const htmlContent = `
-<div style="background-color: #060913; padding: 28px 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-align: center;">
-  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 520px; margin: 0 auto; background-color: #0d1322; border-radius: 24px; border: 2px solid #eab308; overflow: hidden; box-shadow: 0 16px 36px rgba(0,0,0,0.6);">
+<div style="background-color: #060913; background-image: linear-gradient(#060913, #060913); padding: 24px 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-align: center; color: #f8fafc;">
+  
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px; margin: 0 auto; background-color: #0d1322; background-image: linear-gradient(#0d1322, #0d1322); border-radius: 24px; border: 2px solid #eab308; overflow: hidden; box-shadow: 0 16px 36px rgba(0,0,0,0.8);">
     <tr>
-      <td style="padding: 28px 20px 24px 20px; text-align: center;">
+      <td style="padding: 26px 18px 22px 18px; text-align: center; background-color: #0d1322; background-image: linear-gradient(#0d1322, #0d1322);">
         
         <!-- Artwork Banner: Pikachu & Greninja -->
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
-            <td align="center" width="42%" style="background-color: #070b14; border: 1px solid rgba(250,204,21,0.3); border-radius: 16px; padding: 12px;">
-              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" width="86" height="86" alt="Pikachu" style="display:block; margin: 0 auto; width: 86px; height: 86px; object-fit: contain;">
+            <td align="center" width="42%" style="background-color: #050811; background-image: linear-gradient(#050811, #050811); border: 1px solid rgba(250,204,21,0.3); border-radius: 16px; padding: 12px;">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" width="84" height="84" alt="Pikachu" style="display:block; margin: 0 auto; width: 84px; height: 84px; object-fit: contain;">
               <div style="font-size: 11px; font-weight: 900; color: #facc15; margin-top: 6px; letter-spacing: 1px;">PIKACHU</div>
             </td>
             <td align="center" width="16%">
               <div style="width: 32px; height: 32px; line-height: 32px; border-radius: 16px; background-color: #dc2626; color: #ffffff; font-weight: 900; font-size: 13px; margin: 0 auto; text-align: center;">VS</div>
             </td>
-            <td align="center" width="42%" style="background-color: #070b14; border: 1px solid rgba(59,130,246,0.3); border-radius: 16px; padding: 12px;">
-              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png" width="86" height="86" alt="Greninja" style="display:block; margin: 0 auto; width: 86px; height: 86px; object-fit: contain;">
+            <td align="center" width="42%" style="background-color: #050811; background-image: linear-gradient(#050811, #050811); border: 1px solid rgba(59,130,246,0.3); border-radius: 16px; padding: 12px;">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png" width="84" height="84" alt="Greninja" style="display:block; margin: 0 auto; width: 84px; height: 84px; object-fit: contain;">
               <div style="font-size: 11px; font-weight: 900; color: #60a5fa; margin-top: 6px; letter-spacing: 1px;">GRENINJA</div>
             </td>
           </tr>
         </table>
 
         <!-- Target Banner -->
-        <div style="display: inline-block; background-color: rgba(234,179,8,0.15); border: 1px solid #eab308; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; color: #fde047; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 20px;">
+        <div style="display: inline-block; background-color: #171c28; background-image: linear-gradient(#171c28, #171c28); border: 1px solid #eab308; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; color: #fde047; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 18px;">
           Special Mission for ${childName}
         </div>
 
-        <h1 style="font-size: 28px; line-height: 1.2; font-weight: 900; color: #ffffff; margin: 16px 0 6px 0; font-family: Georgia, serif;">
+        <h1 style="font-size: 27px; line-height: 1.2; font-weight: 900; color: #ffffff; margin: 14px 0 6px 0; font-family: Georgia, serif;">
           Hudson is Turning 6!
         </h1>
-        <div style="font-size: 12px; font-weight: 700; color: #facc15; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 22px;">
+        <div style="font-size: 12px; font-weight: 700; color: #facc15; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;">
           Pokémon & Ninja Academy Celebration
         </div>
 
-        <!-- BULLETPROOF GMAIL TABLE POKEBALL -->
+        <!-- Inversion-Shielded Pokéball -->
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto 16px auto;">
           <tr>
             <td align="center">
               <a href="${guestLink}" target="_blank" style="text-decoration: none; display: inline-block;">
-                <table border="0" cellpadding="0" cellspacing="0" width="86" height="86" style="border-collapse: separate; border-radius: 43px; border: 3px solid #facc15; background-color: #050811; overflow: hidden; box-shadow: 0 8px 24px rgba(220,38,38,0.5);">
+                <table border="0" cellpadding="0" cellspacing="0" width="84" height="84" style="border-collapse: separate; border-radius: 42px; border: 3px solid #facc15; background-color: #050811; overflow: hidden; box-shadow: 0 8px 24px rgba(220,38,38,0.5);">
                   <tr>
-                    <td height="40" bgcolor="#dc2626" style="background-color: #dc2626; line-height: 1px; font-size: 1px;">&nbsp;</td>
+                    <td height="38" style="background-color: #dc2626; background-image: linear-gradient(#dc2626, #dc2626); line-height: 1px; font-size: 1px;">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td height="6" bgcolor="#090d16" align="center" valign="middle" style="background-color: #090d16; line-height: 0px; font-size: 0px;">
-                      <!-- Dead Center 6 Button -->
-                      <table border="0" cellpadding="0" cellspacing="0" width="28" height="28" style="border-collapse: separate; border-radius: 14px; background-color: #050811; border: 2px solid #facc15; margin: -14px auto 0 auto;">
+                    <td height="8" style="background-color: #050811; background-image: linear-gradient(#050811, #050811); line-height: 0px; font-size: 0px;" align="center" valign="middle">
+                      <!-- Center 6 Ring -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="28" height="28" style="border-collapse: separate; border-radius: 14px; background-color: #050811; background-image: linear-gradient(#050811, #050811); border: 2px solid #facc15; margin: -14px auto 0 auto;">
                         <tr>
                           <td align="center" valign="middle" height="24" style="font-size: 13px; font-weight: 900; color: #facc15; font-family: Arial, sans-serif; line-height: 24px; text-align: center;">
                             6
@@ -349,7 +350,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td height="40" bgcolor="#f8fafc" style="background-color: #f8fafc; line-height: 1px; font-size: 1px;">&nbsp;</td>
+                    <td height="38" style="background-color: #ffffff; background-image: linear-gradient(#ffffff, #ffffff); line-height: 1px; font-size: 1px;">&nbsp;</td>
                   </tr>
                 </table>
                 <div style="font-size: 11px; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;">
@@ -361,7 +362,7 @@
         </table>
 
         <!-- Logistics Card -->
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #070b14; border-radius: 16px; border: 1px solid #1e293b; margin: 16px 0 20px 0; text-align: center;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #050811; background-image: linear-gradient(#050811, #050811); border-radius: 16px; border: 1px solid #1e293b; margin: 16px 0 20px 0; text-align: center;">
           <tr>
             <td style="padding: 16px 18px;">
               <div style="font-size: 15px; font-weight: 800; color: #ffffff; margin-bottom: 4px;">
@@ -381,7 +382,7 @@
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="center">
-              <a href="${guestLink}" target="_blank" style="display: block; width: 100%; max-width: 320px; background-color: #dc2626; color: #ffffff; font-size: 14px; font-weight: 900; text-align: center; text-decoration: none; padding: 14px 20px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 6px 18px rgba(220,38,38,0.4);">
+              <a href="${guestLink}" target="_blank" style="display: block; width: 100%; max-width: 320px; background-color: #dc2626; background-image: linear-gradient(#dc2626, #dc2626); color: #ffffff; font-size: 14px; font-weight: 900; text-align: center; text-decoration: none; padding: 14px 20px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 6px 18px rgba(220,38,38,0.4);">
                 RSVP for ${childName}
               </a>
             </td>
@@ -576,7 +577,6 @@
   <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
     <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <!-- Secret Host Access Button (⚡) -->
         <span id="hostTrigger" class="text-2xl cursor-pointer select-none hover:scale-125 transition" title="Host Access">⚡</span>
         <span class="font-ninja text-sm sm:text-base tracking-widest text-slate-200 uppercase font-bold">Hudson's 6th Birthday</span>
       </div>
