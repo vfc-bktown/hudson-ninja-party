@@ -28,7 +28,7 @@
       -webkit-text-fill-color: transparent;
     }
     .gold-border {
-      border-color: rgba(250, 204, 21, 0.35);
+      border-color: rgba(250, 204, 21, 0.4);
     }
     .wax-seal {
       box-shadow: 0 12px 30px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.4);
@@ -37,6 +37,13 @@
     .wax-seal:hover {
       transform: scale(1.08);
       box-shadow: 0 16px 36px rgba(239, 68, 68, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    }
+    .pokemon-float {
+      animation: pokeFloat 3.5s ease-in-out infinite;
+    }
+    @keyframes pokeFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
     }
   </style>
 </head>
@@ -62,25 +69,28 @@
     </div>
   </header>
 
-  <!-- Interactive Envelope Presentation Overlay -->
+  <!-- Interactive Envelope Overlay -->
   <div id="envelopeScreen" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-700">
     <div class="w-full max-w-md relative">
-      <div class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-400/30 rounded-3xl p-8 sm:p-10 text-center shadow-2xl overflow-hidden">
+      <div class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-amber-400/40 rounded-3xl p-8 sm:p-10 text-center shadow-2xl overflow-hidden">
         
-        <div class="space-y-6">
+        <!-- Envelope Character Art -->
+        <div class="flex justify-center -mt-2 mb-2">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-28 h-28 object-contain drop-shadow-2xl pokemon-float">
+        </div>
+
+        <div class="space-y-4">
           <div class="inline-block px-4 py-1.5 rounded-full text-xs font-ninja tracking-widest uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30 font-bold">
             Official Mission Invite
           </div>
 
-          <div>
-            <h1 class="text-3xl sm:text-4xl font-serif-luxury font-bold text-white tracking-wide leading-tight">
-              Hudson is Turning 6!
-            </h1>
-            <p class="text-sm text-amber-400 font-ninja mt-2 tracking-wider uppercase font-semibold">Pokémon & Ninja Warrior Academy</p>
-          </div>
+          <h1 class="text-3xl sm:text-4xl font-serif-luxury font-bold text-white tracking-wide leading-tight">
+            Hudson is Turning 6!
+          </h1>
+          <p class="text-sm text-amber-400 font-ninja tracking-wider uppercase font-semibold">Pokémon & Ninja Academy</p>
 
           <!-- Pokéball Wax Seal Interactive Button -->
-          <div class="py-4 flex flex-col items-center justify-center">
+          <div class="py-3 flex flex-col items-center justify-center">
             <button id="breakSealBtn" class="wax-seal group relative w-24 h-24 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center border-4 border-amber-400 cursor-pointer focus:outline-none">
               <div class="absolute inset-0 rounded-full flex flex-col overflow-hidden pointer-events-none opacity-90">
                 <div class="h-1/2 bg-red-600"></div>
@@ -105,7 +115,7 @@
     </div>
   </div>
 
-  <!-- Confirmation Modal (Prevents accidental mix-ups) -->
+  <!-- Confirmation Modal -->
   <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 rounded-3xl p-6 sm:p-7 max-w-sm w-full shadow-2xl border border-slate-700 text-center space-y-4">
       <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl">
@@ -131,11 +141,28 @@
   <!-- Main Content Layout -->
   <main class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
 
-    <!-- Stationery Hero Card -->
-    <section class="relative bg-gradient-to-b from-slate-900/90 to-slate-950 border-2 gold-border rounded-3xl p-6 sm:p-10 shadow-2xl text-center space-y-6 overflow-hidden">
+    <!-- Stationery Hero Card With Pokémon Images -->
+    <section class="relative bg-gradient-to-b from-slate-900/90 to-slate-950 border-2 gold-border rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-6 overflow-hidden">
       <!-- Glow Accents -->
       <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Character Artwork Banner -->
+      <div class="flex items-center justify-center gap-4 sm:gap-10 pt-2">
+        <div class="relative group">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-24 sm:w-32 h-24 sm:h-32 object-contain drop-shadow-[0_10px_20px_rgba(250,204,21,0.25)] pokemon-float">
+          <span class="text-[11px] font-ninja tracking-wider text-amber-300 font-bold block mt-1">PIKACHU</span>
+        </div>
+        
+        <div class="w-12 h-12 rounded-full bg-amber-400/10 border border-amber-400/40 flex items-center justify-center font-ninja font-black text-amber-300 text-lg">
+          VS
+        </div>
+
+        <div class="relative group">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png" alt="Greninja" class="w-24 sm:w-32 h-24 sm:h-32 object-contain drop-shadow-[0_10px_20px_rgba(59,130,246,0.25)] pokemon-float" style="animation-delay: 1.5s;">
+          <span class="text-[11px] font-ninja tracking-wider text-blue-400 font-bold block mt-1">GRENINJA</span>
+        </div>
+      </div>
 
       <div class="space-y-3">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-ninja tracking-wider uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30 font-bold">
@@ -149,7 +176,7 @@
         </h1>
 
         <p class="text-base sm:text-lg text-slate-200 max-w-lg mx-auto font-medium">
-          Get ready for a private 2-hour Pokémon & Ninja Warrior training battle in DUMBO!
+          Join Hudson for 2 hours of private Pokémon battles and Ninja Warrior obstacle courses!
         </p>
       </div>
 
@@ -310,7 +337,7 @@
         <div id="hostDietaryList" class="space-y-1.5 text-sm"></div>
       </div>
 
-      <!-- Master Roster Table with Inline Correction Controls -->
+      <!-- Master Roster Table -->
       <div class="overflow-x-auto rounded-2xl border border-slate-800">
         <table class="w-full text-left text-sm">
           <thead class="bg-slate-900 text-slate-300 font-bold border-b border-slate-800">
@@ -339,7 +366,6 @@
   </main>
 
   <script>
-    // Initial 13 Kids in Strict Alphabetical Order
     const INITIAL_GUESTS = [
       { name: "Arthur", status: "Awaiting", dietary: "", contact: "", note: "" },
       { name: "Cleo", status: "Awaiting", dietary: "", contact: "", note: "" },
@@ -356,7 +382,7 @@
       { name: "Waleska", status: "Awaiting", dietary: "", contact: "", note: "" }
     ];
 
-    const STORAGE_KEY = "hudson_6th_bday_guests_v4";
+    const STORAGE_KEY = "hudson_6th_bday_guests_v5";
     const HOST_PIN = "1017";
 
     function getGuests() {
@@ -503,7 +529,6 @@
       `).join("");
     }
 
-    // Host reset/correction function
     window.resetGuest = function(name) {
       const guests = getGuests();
       const guest = guests.find(g => g.name === name);
@@ -530,7 +555,6 @@
       if (isHostMode) renderHostDashboard();
     }
 
-    // Confirmation Modal Handlers
     const confirmModal = document.getElementById("confirmModal");
     const confirmModalText = document.getElementById("confirmModalText");
     const modalConfirmBtn = document.getElementById("modalConfirmBtn");
@@ -589,7 +613,6 @@
       }
     }
 
-    // Envelope Screen Logic
     const envelopeScreen = document.getElementById("envelopeScreen");
     const breakSealBtn = document.getElementById("breakSealBtn");
     const envelopeToggleBtn = document.getElementById("envelopeToggleBtn");
@@ -602,7 +625,6 @@
       envelopeScreen.classList.remove("opacity-0", "pointer-events-none");
     });
 
-    // Host Mode Password Toggle
     const modeSwitchBtn = document.getElementById("modeSwitchBtn");
     const modeLabel = document.getElementById("modeLabel");
     const hostDashboardSection = document.getElementById("hostDashboardSection");
@@ -638,7 +660,6 @@
 
     exitHostBtn.addEventListener("click", () => setHostMode(false));
 
-    // Filters
     document.querySelectorAll(".filter-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".filter-btn").forEach(b => {
@@ -650,7 +671,6 @@
       });
     });
 
-    // Calendar .ics download
     document.getElementById("addToCalBtn").addEventListener("click", () => {
       const icsData = [
         "BEGIN:VCALENDAR",
@@ -676,7 +696,6 @@
       document.body.removeChild(a);
     });
 
-    // CSV Export
     document.getElementById("exportCsvBtn")?.addEventListener("click", () => {
       const guests = getGuests();
       let csv = "Name,Status,Dietary Restrictions,Contact,Note\n";
@@ -690,14 +709,13 @@
       a.click();
     });
 
-    // Text Summary Copy
     document.getElementById("copySummaryBtn")?.addEventListener("click", () => {
       const guests = getGuests();
       const attending = guests.filter(g => g.status === "Attending").map(g => g.name);
       const pending = guests.filter(g => g.status === "Awaiting").map(g => g.name);
       
       const summary = `HUDSON 6TH BIRTHDAY HEADCOUNT:\nAttending (${attending.length}): ${attending.join(", ") || 'None'}\nAwaiting (${pending.length}): ${pending.join(", ")}`;
-      navigator.clipboard.writeText(summary).then(() => alert("Headcount summary copied to clipboard!"));
+      navigator.clipboard.writeText(summary).then(() => alert("Headcount copied to clipboard!"));
     });
 
     renderApp();
