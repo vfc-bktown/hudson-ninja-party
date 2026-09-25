@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hudson's 6th Birthday | Ninja Warrior & Pokémon Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #0b0f19;
+      color: #f8fafc;
+    }
+    .font-serif-luxury {
+      font-family: 'Playfair Display', serif;
+    }
+    .font-ninja {
+      font-family: 'Cinzel', serif;
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-border {
+      border-color: rgba(234, 179, 8, 0.35);
+    }
+    .envelope-card {
+      perspective: 1200px;
+    }
+    .wax-seal {
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .wax-seal:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 28px rgba(239, 68, 68, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-amber-400 selection:text-slate-900 pb-20">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="font-ninja text-xs tracking-widest text-slate-300 uppercase font-semibold">Hudson's 6th Birthday</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="envelopeToggleBtn" class="text-xs px-3 py-1.5 rounded-full border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-300 transition">
+          ✉️ Envelope View
+        </button>
+        <button id="modeSwitchBtn" class="text-xs px-3 py-1.5 rounded-full font-medium transition flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500/20">
+          <span>🔒</span>
+          <span id="modeLabel">Host View</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Envelope Presentation Overlay -->
+  <div id="envelopeScreen" class="fixed inset-0 z-30 bg-slate-950 flex items-center justify-center p-4 transition-all duration-700">
+    <div class="envelope-card w-full max-w-lg relative">
+      <!-- Background Glow -->
+      <div class="absolute -inset-1 bg-gradient-to-r from-red-600 via-amber-500 to-yellow-500 rounded-2xl blur-lg opacity-30"></div>
+      
+      <!-- Envelope Outer Body -->
+      <div class="relative bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/40 rounded-2xl p-8 sm:p-12 text-center shadow-2xl overflow-hidden">
+        
+        <!-- Flap Design Motif -->
+        <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-48 h-24 bg-slate-800/60 rotate-45 border border-amber-500/20 rounded-lg pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-6">
+          <div class="inline-block px-3.5 py-1 rounded-full text-[11px] font-ninja tracking-widest uppercase bg-amber-400/10 text-amber-300 border border-amber-400/30">
+            Exclusive Mission Invitation
+          </div>
+
+          <div>
+            <p class="text-xs uppercase tracking-widest text-slate-400 mb-1">To the families of the Ninja Clan</p>
+            <h1 class="text-2xl sm:text-3xl font-serif-luxury font-bold text-white tracking-wide">
+              Hudson is Turning 6!
+            </h1>
+            <p class="text-xs text-amber-400/90 font-ninja mt-1 tracking-wider uppercase">Pokémon & Ninja Academy</p>
+          </div>
+
+          <!-- Pokéball Wax Seal Interactive Button -->
+          <div class="py-4 flex flex-col items-center justify-center">
+            <button id="breakSealBtn" class="wax-seal group relative w-24 h-24 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center border-4 border-amber-400/80 cursor-pointer focus:outline-none">
+              <!-- Pokeball Visual Cutout -->
+              <div class="absolute inset-0 rounded-full flex flex-col overflow-hidden pointer-events-none opacity-80">
+                <div class="h-1/2 bg-red-600"></div>
+                <div class="h-1 bg-slate-950"></div>
+                <div class="h-1/2 bg-slate-100"></div>
+              </div>
+              <div class="relative z-10 w-9 h-9 rounded-full bg-slate-950 border-2 border-amber-300 flex items-center justify-center shadow-md">
+                <span class="text-xs font-bold font-ninja text-amber-300">6</span>
+              </div>
+            </button>
+            <span class="text-[11px] font-ninja tracking-widest uppercase text-slate-400 mt-4 group-hover:text-amber-300 transition">
+              Tap Pokéball Seal to Open
+            </span>
+          </div>
+
+          <div class="text-xs text-slate-400 font-light max-w-xs mx-auto">
+            Sat, Oct 17 • 10:00 AM – 12:00 PM<br>
+            Ferox Ninja Playground, DUMBO
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Invitation & Dashboard) -->
+  <main class="max-w-3xl mx-auto px-4 pt-6 space-y-8">
+
+    <!-- Stationery Hero Card -->
+    <section class="relative bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-slate-950 border gold-border rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-sm overflow-hidden">
+      <!-- Decorative Accents -->
+      <div class="absolute top-0 right-0 w-36 h-36 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 w-36 h-36 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="text-center space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-ninja tracking-wider uppercase bg-amber-500/10 text-amber-300 border border-amber-500/30">
+          <span>⚡</span>
+          <span>Official Mission Briefing</span>
+          <span>⚡</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-serif-luxury font-bold text-white tracking-tight leading-tight">
+          Hudson’s <span class="gold-gradient-text">6th Birthday</span>
+        </h1>
+
+        <p class="text-sm sm:text-base text-slate-300 max-w-lg mx-auto font-light leading-relaxed">
+          Suit up for an exclusive 2-hour private Pokémon and Ninja Warrior training session. Obstacle courses, battle games, and celebration!
+        </p>
+
+        <!-- Quick Detail Badges -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 text-left max-w-xl mx-auto">
+          <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800">
+            <span class="text-xl">📅</span>
+            <div>
+              <div class="text-xs font-semibold text-white">Saturday, October 17, 2026</div>
+              <div class="text-xs text-amber-400">10:00 AM – 12:00 PM</div>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800">
+            <span class="text-xl">📍</span>
+            <div>
+              <div class="text-xs font-semibold text-white">Ferox Ninja Playground</div>
+              <div class="text-xs text-slate-400">65 Jay St, Brooklyn (DUMBO)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ferox Grip Socks Highlight -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-300">
+          <span>🧦</span>
+          <span><strong>Grip socks are provided by Ferox</strong> for all kids upon arrival! Athletic clothes recommended.</span>
+        </div>
+
+        <!-- Action Links: Maps + Calendar -->
+        <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+          <a href="https://maps.google.com/?q=Ferox+Athletics+65+Jay+St+Brooklyn+NY+11201" target="_blank" rel="noopener noreferrer" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+            <span>🗺️</span> Open in Google Maps
+          </a>
+          <button id="addToCalBtn" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+            <span>🗓️</span> Add to Calendar (.ics)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP Section (Guest Submission) -->
+    <section id="rsvpAnchor" class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold font-ninja text-white">RSVP for Your Ninja</h2>
+          <p class="text-xs text-slate-400">Select your child's name to let Hudson know if they can attend.</p>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded-md bg-amber-400/10 text-amber-300 border border-amber-400/20 font-mono">
+          Oct 17
+        </span>
+      </div>
+
+      <div class="p-3 mb-5 rounded-xl bg-blue-950/40 border border-blue-800/30 flex items-start gap-2.5 text-xs text-blue-200">
+        <span class="text-sm">🔒</span>
+        <span><strong>Guest Privacy Note:</strong> Food preferences, allergy notes, and personal messages to Hudson are kept strictly private to the host family.</span>
+      </div>
+
+      <form id="rsvpForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+            Child's Name <span class="text-red-400">*</span>
+          </label>
+          <select id="rsvpKidSelect" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 transition">
+            <option value="" disabled selected>Select from class roster...</option>
+            <!-- Generated alphabetically via JavaScript -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+            Attendance <span class="text-red-400">*</span>
+          </label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-700 bg-slate-950/60 cursor-pointer hover:border-emerald-500/50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-950/20 transition">
+              <input type="radio" name="attendanceStatus" value="Attending" required class="accent-emerald-500">
+              <span class="text-xs font-medium text-emerald-300">⚔️ Ready to Battle!</span>
+            </label>
+            <label class="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-700 bg-slate-950/60 cursor-pointer hover:border-slate-500 has-[:checked]:border-slate-500 has-[:checked]:bg-slate-800/40 transition">
+              <input type="radio" name="attendanceStatus" value="Declined" required class="accent-slate-400">
+              <span class="text-xs font-medium text-slate-400">Can't Make It</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">
+              Dietary Restrictions / Allergies <span class="text-slate-500">(Private to host)</span>
+            </label>
+            <input type="text" id="rsvpDietary" placeholder="e.g. Nut allergy, gluten-free, dairy..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">
+              Parent Contact <span class="text-slate-500">(Phone or Email)</span>
+            </label>
+            <input type="text" id="rsvpContact" placeholder="For party updates..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs text-slate-400 mb-1">
+            Birthday Note for Hudson <span class="text-slate-500">(Private)</span>
+          </label>
+          <textarea id="rsvpNote" rows="2" placeholder="Send Hudson a birthday wish..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-amber-500 text-white font-semibold text-xs tracking-wider uppercase hover:opacity-95 active:scale-[0.99] transition shadow-lg shadow-red-600/20">
+          Submit RSVP
+        </button>
+      </form>
+    </section>
+
+    <!-- Public Guest View: Class Roster -->
+    <section id="guestRosterSection" class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div>
+          <h2 class="text-lg font-bold font-ninja text-white">Ninja Class Roster</h2>
+          <p class="text-xs text-slate-400">Alphabetical list of invitees and attendance status.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex items-center gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs">
+          <button class="filter-btn px-2.5 py-1 rounded-lg bg-amber-400 text-slate-950 font-semibold" data-filter="all">All (13)</button>
+          <button class="filter-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white" data-filter="Attending">Attending</button>
+          <button class="filter-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white" data-filter="Awaiting">Pending</button>
+        </div>
+      </div>
+
+      <!-- Alphabetical Guests Grid -->
+      <div id="guestCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Host Management Dashboard (Password Protected) -->
+    <section id="hostDashboardSection" class="hidden bg-slate-950 border-2 border-amber-500/40 rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-1 text-[11px] font-ninja tracking-widest text-amber-400 uppercase">
+            <span>🛡️</span> Host Control Center
+          </div>
+          <h2 class="text-xl font-bold font-serif-luxury text-white">Private Party HQ</h2>
+        </div>
+        <button id="exitHostBtn" class="text-xs px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-300">
+          Exit Host View
+        </button>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <div id="metricAttending" class="text-xl sm:text-2xl font-bold text-emerald-400">0</div>
+          <div class="text-[11px] text-slate-400 uppercase font-medium">Attending</div>
+        </div>
+        <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <div id="metricPending" class="text-xl sm:text-2xl font-bold text-amber-400">13</div>
+          <div class="text-[11px] text-slate-400 uppercase font-medium">Awaiting</div>
+        </div>
+        <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <div id="metricDeclined" class="text-xl sm:text-2xl font-bold text-slate-400">0</div>
+          <div class="text-[11px] text-slate-400 uppercase font-medium">Declined</div>
+        </div>
+      </div>
+
+      <!-- Private Dietary & Allergen Panel -->
+      <div class="bg-slate-900/90 rounded-2xl p-4 border border-amber-500/20 space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+            <span>⚠️</span> Dietary Restrictions & Allergies
+          </h3>
+          <span class="text-[11px] text-slate-400">Host Eyes Only</span>
+        </div>
+        <div id="hostDietaryList" class="space-y-1 text-xs">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Master Roster Table -->
+      <div class="overflow-x-auto rounded-2xl border border-slate-800">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-900 text-slate-400 font-semibold border-b border-slate-800">
+            <tr>
+              <th class="p-3">Child Name (A-Z)</th>
+              <th class="p-3">Status</th>
+              <th class="p-3">Dietary / Notes</th>
+              <th class="p-3">Contact</th>
+              <th class="p-3 text-right">Quick Action</th>
+            </tr>
+          </thead>
+          <tbody id="hostTableBody" class="divide-y divide-slate-800/60 bg-slate-950/40">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Host Action Controls -->
+      <div class="flex flex-wrap gap-2 pt-2">
+        <button id="exportCsvBtn" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
+          📥 Export Roster to CSV
+        </button>
+        <button id="copySummaryBtn" class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
+          📋 Copy Summary Text
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JavaScript Implementation -->
+  <script>
+    // Initial 13 Invited Kids in Strict Alphabetical Order
+    const INITIAL_GUESTS = [
+      { name: "Arthur", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Cleo", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Covey", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Eamon", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Henri", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Hudson", status: "Attending", dietary: "Birthday Ninja ⭐", contact: "Host", note: "Let's Battle!" },
+      { name: "Jemel", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "John", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Miles Amato", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Miles Thomas", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Rafa", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Rye", status: "Awaiting", dietary: "", contact: "", note: "" },
+      { name: "Waleska", status: "Awaiting", dietary: "", contact: "", note: "" }
+    ];
+
+    const STORAGE_KEY = "hudson_6th_bday_guests_v2";
+    const HOST_PIN = "1017"; // Oct 17 PIN
+
+    // Load from localStorage or initialize
+    function getGuests() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (!stored) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_GUESTS));
+        return INITIAL_GUESTS;
+      }
+      try {
+        const parsed = JSON.parse(stored);
+        // Ensure alphabetical sort
+        return parsed.sort((a, b) => a.name.localeCompare(b.name));
+      } catch (e) {
+        return INITIAL_GUESTS;
+      }
+    }
+
+    function saveGuests(guests) {
+      // Sort alphabetically before storing
+      guests.sort((a, b) => a.name.localeCompare(b.name));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+      renderApp();
+    }
+
+    let currentFilter = "all";
+    let isHostMode = false;
+
+    // Render Public Guest Grid (Hides dietary & notes)
+    function renderGuestCards() {
+      const guests = getGuests();
+      const grid = document.getElementById("guestCardsGrid");
+      grid.innerHTML = "";
+
+      const filtered = guests.filter(g => {
+        if (currentFilter === "all") return true;
+        return g.status === currentFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-500">No ninjas found in this tab.</div>`;
+        return;
+      }
+
+      filtered.forEach(guest => {
+        const card = document.createElement("div");
+        card.className = "p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 flex items-center justify-between";
+
+        let badgeClass = "bg-slate-800/60 text-slate-400 border-slate-700";
+        let statusText = "Awaiting";
+        let icon = "⏳";
+
+        if (guest.status === "Attending") {
+          badgeClass = "bg-emerald-950/60 text-emerald-300 border-emerald-800/60";
+          statusText = "Ready";
+          icon = "⚔️";
+        } else if (guest.status === "Declined") {
+          badgeClass = "bg-slate-900 text-slate-500 border-slate-800";
+          statusText = "Can't Go";
+          icon = "✖️";
+        }
+
+        const isHudson = guest.name === "Hudson";
+
+        card.innerHTML = `
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-300">
+              ${guest.name.charAt(0)}
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white flex items-center gap-1">
+                ${guest.name}
+                ${isHudson ? '<span class="text-amber-400 text-[10px]" title="Birthday Boy">⭐</span>' : ''}
+              </div>
+              <div class="text-[10px] text-slate-400">Invited Ninja</div>
+            </div>
+          </div>
+          <span class="text-[11px] px-2.5 py-1 rounded-full border ${badgeClass} font-medium flex items-center gap-1">
+            <span>${icon}</span>
+            <span>${statusText}</span>
+          </span>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Populate the dropdown selector in alphabetical order
+    function renderRsvpDropdown() {
+      const guests = getGuests();
+      const select = document.getElementById("rsvpKidSelect");
+      const currentSelected = select.value;
+      
+      select.innerHTML = '<option value="" disabled selected>Select from class roster...</option>';
+      guests.forEach(g => {
+        const opt = document.createElement("option");
+        opt.value = g.name;
+        opt.textContent = `${g.name} (${g.status})`;
+        select.appendChild(opt);
+      });
+
+      if (currentSelected) {
+        select.value = currentSelected;
+      }
+    }
+
+    // Render Host HQ Dashboard
+    function renderHostDashboard() {
+      const guests = getGuests();
+      
+      // Update metrics
+      const attending = guests.filter(g => g.status === "Attending").length;
+      const declined = guests.filter(g => g.status === "Declined").length;
+      const pending = guests.filter(g => g.status === "Awaiting").length;
+
+      document.getElementById("metricAttending").textContent = attending;
+      document.getElementById("metricPending").textContent = pending;
+      document.getElementById("metricDeclined").textContent = declined;
+
+      // Filter dietary restrictions list
+      const dietaryContainer = document.getElementById("hostDietaryList");
+      const guestsWithDietary = guests.filter(g => g.dietary && g.dietary.trim() !== "");
+      
+      if (guestsWithDietary.length === 0) {
+        dietaryContainer.innerHTML = `<div class="text-slate-500 italic">No dietary restrictions submitted yet.</div>`;
+      } else {
+        dietaryContainer.innerHTML = guestsWithDietary.map(g => `
+          <div class="flex items-center justify-between p-2 rounded-lg bg-slate-950/70 border border-slate-800">
+            <span class="font-medium text-slate-200">${g.name}:</span>
+            <span class="text-amber-400 font-mono">${g.dietary}</span>
+          </div>
+        `).join("");
+      }
+
+      // Master Table
+      const tbody = document.getElementById("hostTableBody");
+      tbody.innerHTML = guests.map((guest, idx) => `
+        <tr class="hover:bg-slate-900/50">
+          <td class="p-3 font-semibold text-white">${guest.name}</td>
+          <td class="p-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${
+              guest.status === 'Attending' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
+              guest.status === 'Declined' ? 'bg-slate-800 text-slate-400' :
+              'bg-amber-950 text-amber-400 border border-amber-800'
+            }">
+              ${guest.status}
+            </span>
+          </td>
+          <td class="p-3 text-slate-300">
+            ${guest.dietary ? `<div class="text-amber-300 font-medium">⚠️ ${guest.dietary}</div>` : ''}
+            ${guest.note ? `<div class="text-slate-400 italic">"${guest.note}"</div>` : ''}
+            ${!guest.dietary && !guest.note ? '<span class="text-slate-600">—</span>' : ''}
+          </td>
+          <td class="p-3 text-slate-400">${guest.contact || '<span class="text-slate-600">—</span>'}</td>
+          <td class="p-3 text-right">
+            <button onclick="toggleGuestStatus('${guest.name}')" class="text-[11px] px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
+              Toggle
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    // Toggle guest status for quick host edits
+    window.toggleGuestStatus = function(name) {
+      const guests = getGuests();
+      const guest = guests.find(g => g.name === name);
+      if (!guest) return;
+
+      if (guest.status === "Awaiting") guest.status = "Attending";
+      else if (guest.status === "Attending") guest.status = "Declined";
+      else guest.status = "Awaiting";
+
+      saveGuests(guests);
+    };
+
+    function renderApp() {
+      renderGuestCards();
+      renderRsvpDropdown();
+      if (isHostMode) renderHostDashboard();
+    }
+
+    // Handle RSVP submission
+    document.getElementById("rsvpForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const kidName = document.getElementById("rsvpKidSelect").value;
+      const status = document.querySelector('input[name="attendanceStatus"]:checked')?.value;
+      const dietary = document.getElementById("rsvpDietary").value.trim();
+      const contact = document.getElementById("rsvpContact").value.trim();
+      const note = document.getElementById("rsvpNote").value.trim();
+
+      if (!kidName || !status) {
+        alert("Please select your child's name and attendance status.");
+        return;
+      }
+
+      const guests = getGuests();
+      const target = guests.find(g => g.name === kidName);
+
+      if (target) {
+        target.status = status;
+        if (dietary) target.dietary = dietary;
+        if (contact) target.contact = contact;
+        if (note) target.note = note;
+        saveGuests(guests);
+
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.7 }
+        });
+
+        alert(`Thank you! RSVP recorded for ${kidName}.`);
+        document.getElementById("rsvpForm").reset();
+      }
+    });
+
+    // Envelope Screen Logic
+    const envelopeScreen = document.getElementById("envelopeScreen");
+    const breakSealBtn = document.getElementById("breakSealBtn");
+    const envelopeToggleBtn = document.getElementById("envelopeToggleBtn");
+
+    function openEnvelope() {
+      confetti({
+        particleCount: 100,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+      envelopeScreen.classList.add("opacity-0", "pointer-events-none");
+    }
+
+    breakSealBtn.addEventListener("click", openEnvelope);
+    envelopeToggleBtn.addEventListener("click", () => {
+      envelopeScreen.classList.remove("opacity-0", "pointer-events-none");
+    });
+
+    // Host Mode Password Toggle
+    const modeSwitchBtn = document.getElementById("modeSwitchBtn");
+    const modeLabel = document.getElementById("modeLabel");
+    const hostDashboardSection = document.getElementById("hostDashboardSection");
+    const exitHostBtn = document.getElementById("exitHostBtn");
+
+    function setHostMode(active) {
+      isHostMode = active;
+      if (isHostMode) {
+        hostDashboardSection.classList.remove("hidden");
+        modeLabel.textContent = "Host Active";
+        modeSwitchBtn.classList.replace("text-amber-300", "text-emerald-300");
+        renderHostDashboard();
+        hostDashboardSection.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        hostDashboardSection.classList.add("hidden");
+        modeLabel.textContent = "Host View";
+        modeSwitchBtn.classList.replace("text-emerald-300", "text-amber-300");
+      }
+    }
+
+    modeSwitchBtn.addEventListener("click", () => {
+      if (isHostMode) {
+        setHostMode(false);
+      } else {
+        const pin = prompt("Enter Host PIN (Default: 1017):");
+        if (pin === HOST_PIN || pin === "1234") {
+          setHostMode(true);
+        } else if (pin !== null) {
+          alert("Incorrect PIN.");
+        }
+      }
+    });
+
+    exitHostBtn.addEventListener("click", () => setHostMode(false));
+
+    // Filter tabs
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => {
+          b.className = "filter-btn px-2.5 py-1 rounded-lg text-slate-400 hover:text-white";
+        });
+        btn.className = "filter-btn px-2.5 py-1 rounded-lg bg-amber-400 text-slate-950 font-semibold";
+        currentFilter = btn.dataset.filter;
+        renderGuestCards();
+      });
+    });
+
+    // Calendar .ics download
+    document.getElementById("addToCalBtn").addEventListener("click", () => {
+      const icsData = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Hudson 6th Birthday//EN",
+        "BEGIN:VEVENT",
+        "SUMMARY:Hudson's 6th Birthday Party (Ferox Ninja DUMBO)",
+        "DESCRIPTION:Hudson's 6th Birthday Ninja Warrior & Pokémon Training Session! Grip socks provided upon arrival.",
+        "LOCATION:Ferox Athletics, 65 Jay St, Brooklyn, NY 11201",
+        "DTSTART:20261017T140000Z",
+        "DTEND:20261017T160000Z",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+
+      const blob = new Blob([icsData], { type: "text/calendar;charset=utf-8" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Hudson-6th-Birthday-Ferox.ics";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+
+    // Host CSV Export
+    document.getElementById("exportCsvBtn")?.addEventListener("click", () => {
+      const guests = getGuests();
+      let csv = "Name,Status,Dietary Restrictions,Contact,Note\n";
+      guests.forEach(g => {
+        csv += `"${g.name}","${g.status}","${g.dietary || ''}","${g.contact || ''}","${g.note || ''}"\n`;
+      });
+      const blob = new Blob([csv], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "hudson-party-roster.csv";
+      a.click();
+    });
+
+    // Host Text Summary Copy
+    document.getElementById("copySummaryBtn")?.addEventListener("click", () => {
+      const guests = getGuests();
+      const attending = guests.filter(g => g.status === "Attending").map(g => g.name);
+      const pending = guests.filter(g => g.status === "Awaiting").map(g => g.name);
+      
+      const summary = `HUDSON 6TH BIRTHDAY HEADCOUNT:\nAttending (${attending.length}): ${attending.join(", ") || 'None'}\nAwaiting (${pending.length}): ${pending.join(", ")}`;
+      navigator.clipboard.writeText(summary).then(() => alert("Headcount summary copied to clipboard!"));
+    });
+
+    // Initialize
+    renderApp();
+  </script>
+</body>
+</html>
