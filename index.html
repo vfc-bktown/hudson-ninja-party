@@ -75,7 +75,6 @@
     let isHostMode = false;
     const HOST_PIN = "1017";
 
-    // Detect URL parameter ?guest=Name or ?kid=Name
     const urlParams = new URLSearchParams(window.location.search);
     const guestParam = urlParams.get('guest') || urlParams.get('kid');
 
@@ -86,7 +85,6 @@
     async function initApp() {
       const guestsRef = collection(db, "guests");
 
-      // Set up real-time listener
       onSnapshot(guestsRef, async (snapshot) => {
         if (snapshot.empty) {
           for (const name of INITIAL_ROSTER) {
@@ -251,42 +249,18 @@
       }
 
       const tbody = document.getElementById("hostTableBody");
-      const baseUrl = window.location.origin + window.location.pathname;
 
       tbody.innerHTML = guestsData.map((guest) => {
-        const guestLink = `${baseUrl}?guest=${encodeURIComponent(guest.name)}`;
-        
-        const emailSubject = encodeURIComponent(`⚡ Hudson's 6th Birthday Mission: Invite for ${guest.name}!`);
-        const emailBody = encodeURIComponent(
-`Hi!
-
-Hudson is turning 6! We would love for ${guest.name} to join us for a 2-hour private Pokémon battle and Ninja Warrior obstacle course celebration at Ferox Ninja Playground in DUMBO!
-
-📅 Date: Saturday, October 17
-⏰ Time: 10:00 AM – 12:00 PM
-📍 Location: Ferox Athletics, 65 Jay St, Brooklyn, NY 11201
-🍕 Food: Pizza and ice cream cake will be served!
-🧦 Grip socks: Provided by Ferox upon arrival.
-
-Please use ${guest.name}'s personalized invitation link to RSVP:
-${guestLink}
-
-Hope you can make it!
-
-Best,
-The Fried-Chung Family`
-        );
-
         return `
           <tr class="hover:bg-slate-900/60">
             <td class="p-3.5 font-bold text-white">
               <div class="text-base">${guest.name}</div>
-              <div class="mt-1.5 flex flex-wrap items-center gap-2 font-normal">
-                <a href="mailto:?subject=${emailSubject}&body=${emailBody}" class="text-xs px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-400/40 hover:bg-amber-500/30 flex items-center gap-1 font-semibold transition">
-                  <span>✉️</span> Draft Email
-                </a>
-                <button onclick="navigator.clipboard.writeText('${guestLink}'); alert('Copied personal link for ${guest.name}!');" class="text-xs px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 flex items-center gap-1 font-semibold transition">
-                  <span>📋</span> Copy Link
+              <div class="mt-2 flex flex-wrap items-center gap-2 font-normal">
+                <button onclick="window.copyHtmlInvite('${guest.name}')" class="text-xs px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold transition flex items-center gap-1.5 shadow-md">
+                  <span>✉️</span> Copy HTML Email Card
+                </button>
+                <button onclick="window.copyTextLink('${guest.name}')" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold transition">
+                  📋 Link
                 </button>
               </div>
             </td>
@@ -313,6 +287,135 @@ The Fried-Chung Family`
         `;
       }).join("");
     }
+
+    // Rich HTML Clipboard Generator for Gmail
+    window.copyHtmlInvite = async function(childName) {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const guestLink = `${baseUrl}?guest=${encodeURIComponent(childName)}`;
+
+      const htmlContent = `
+<div style="background-color: #060913; padding: 28px 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-align: center;">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; margin: 0 auto; background-color: #0d1322; border-radius: 24px; border: 2px solid #eab308; overflow: hidden; box-shadow: 0 16px 36px rgba(0,0,0,0.6);">
+    <tr>
+      <td style="padding: 28px 24px 16px 24px; text-align: center;">
+        
+        <!-- Artwork Banner: Pikachu & Greninja -->
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td align="center" width="42%" style="background-color: #070b14; border: 1px solid rgba(250,204,21,0.3); border-radius: 16px; padding: 12px;">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" width="90" height="90" alt="Pikachu" style="display:block; margin: 0 auto; max-width: 90px; height: auto;">
+              <div style="font-size: 11px; font-weight: 900; color: #facc15; margin-top: 6px; letter-spacing: 1px;">PIKACHU</div>
+            </td>
+            <td align="center" width="16%">
+              <div style="width: 34px; height: 34px; line-height: 34px; border-radius: 17px; background-color: #dc2626; color: #ffffff; font-weight: 900; font-size: 13px; margin: 0 auto; text-align: center;">VS</div>
+            </td>
+            <td align="center" width="42%" style="background-color: #070b14; border: 1px solid rgba(59,130,246,0.3); border-radius: 16px; padding: 12px;">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png" width="90" height="90" alt="Greninja" style="display:block; margin: 0 auto; max-width: 90px; height: auto;">
+              <div style="font-size: 11px; font-weight: 900; color: #60a5fa; margin-top: 6px; letter-spacing: 1px;">GRENINJA</div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Personalized Target Banner -->
+        <div style="display: inline-block; background-color: rgba(234,179,8,0.15); border: 1px solid #eab308; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; color: #fde047; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 20px;">
+          VIP Mission Invite For: ${childName}
+        </div>
+
+        <h1 style="font-size: 30px; line-height: 1.2; font-weight: 900; color: #ffffff; margin: 16px 0 6px 0; font-family: Georgia, serif;">
+          Hudson is Turning 6!
+        </h1>
+        <div style="font-size: 13px; font-weight: 700; color: #facc15; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;">
+          Pokémon & Ninja Academy Celebration
+        </div>
+
+        <!-- Centered Pokéball Wax Seal Button to Open -->
+        <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 14px auto;">
+          <tr>
+            <td align="center">
+              <a href="${guestLink}" target="_blank" style="text-decoration: none; display: block;">
+                <table border="0" cellpadding="0" cellspacing="0" width="84" height="84" style="border-collapse: separate; border-radius: 42px; border: 3px solid #facc15; overflow: hidden; background-color: #020617; box-shadow: 0 8px 24px rgba(220,38,38,0.5);">
+                  <tr>
+                    <td height="38" bgcolor="#dc2626" style="background-color: #dc2626; line-height: 1px; font-size: 1px;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td height="6" bgcolor="#090d16" style="background-color: #090d16; line-height: 1px; font-size: 1px; text-align: center;">
+                      <table align="center" border="0" cellpadding="0" cellspacing="0" width="28" height="28" style="border-collapse: separate; border-radius: 14px; background-color: #000000; border: 2px solid #facc15; margin: -11px auto 0 auto;">
+                        <tr>
+                          <td align="center" valign="middle" style="font-size: 13px; font-weight: 900; color: #facc15; font-family: Arial, sans-serif;">6</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td height="40" bgcolor="#f1f5f9" style="background-color: #f1f5f9; line-height: 1px; font-size: 1px;">&nbsp;</td>
+                  </tr>
+                </table>
+                <div style="font-size: 11px; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;">
+                  Tap Pokéball to Open & RSVP
+                </div>
+              </a>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Logistics Card -->
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #070b14; border-radius: 16px; border: 1px solid #1e293b; margin: 18px 0; text-align: center;">
+          <tr>
+            <td style="padding: 16px 20px;">
+              <div style="font-size: 15px; font-weight: 800; color: #ffffff; margin-bottom: 4px;">
+                🗓️ Saturday, October 17 • 10:00 AM – 12:00 PM
+              </div>
+              <div style="font-size: 13px; color: #94a3b8;">
+                📍 Ferox Ninja Park • 65 Jay St, DUMBO
+              </div>
+              <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #1e293b; font-size: 12px; font-weight: 600; color: #fef08a;">
+                🍕 Pizza & Ice Cream Cake Served • 🧦 Grip Socks Provided Upon Arrival
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Dedicated CTA Button -->
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 16px;">
+          <tr>
+            <td align="center">
+              <a href="${guestLink}" target="_blank" style="display: block; width: 100%; max-width: 320px; background-color: #dc2626; color: #ffffff; font-size: 14px; font-weight: 900; text-align: center; text-decoration: none; padding: 14px 20px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 6px 18px rgba(220,38,38,0.4);">
+                RSVP for ${childName}
+              </a>
+            </td>
+          </tr>
+        </table>
+
+        <div style="font-size: 11px; color: #64748b; margin-top: 14px;">
+          Personalized link for ${childName}: <a href="${guestLink}" style="color: #94a3b8; text-decoration: underline;">${guestLink}</a>
+        </div>
+
+      </td>
+    </tr>
+  </table>
+</div>
+      `;
+
+      const plainText = `Hudson's 6th Birthday Party!\nSaturday, October 17 • 10:00 AM – 12:00 PM\nFerox Ninja Park (65 Jay St, DUMBO)\n\nRSVP link for ${childName}:\n${guestLink}`;
+
+      try {
+        const blobHtml = new Blob([htmlContent], { type: 'text/html' });
+        const blobText = new Blob([plainText], { type: 'text/plain' });
+        const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
+        await navigator.clipboard.write(data);
+        alert(`Copied HTML email card for ${childName}!\n\nNow open Gmail, click Compose, and press Paste (Cmd+V / Ctrl+V).`);
+      } catch (err) {
+        navigator.clipboard.writeText(guestLink);
+        alert(`Link copied: ${guestLink}`);
+      }
+    };
+
+    window.copyTextLink = function(childName) {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const guestLink = `${baseUrl}?guest=${encodeURIComponent(childName)}`;
+      navigator.clipboard.writeText(guestLink);
+      alert(`Copied link for ${childName}!`);
+    };
 
     window.overrideStatus = async function(name, status) {
       try {
@@ -417,7 +520,6 @@ The Fried-Chung Family`
 
     exitHostBtn.addEventListener("click", () => setHostMode(false));
 
-    // Filter roster cards
     document.querySelectorAll(".filter-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".filter-btn").forEach(b => {
@@ -429,7 +531,6 @@ The Fried-Chung Family`
       });
     });
 
-    // Add to Calendar
     document.getElementById("addToCalBtn").addEventListener("click", () => {
       const icsData = [
         "BEGIN:VCALENDAR",
@@ -455,7 +556,6 @@ The Fried-Chung Family`
       document.body.removeChild(a);
     });
 
-    // Export CSV
     document.getElementById("exportCsvBtn")?.addEventListener("click", () => {
       let csv = "Name,Status,Dietary Restrictions,Note\n";
       guestsData.forEach(g => {
@@ -468,7 +568,6 @@ The Fried-Chung Family`
       a.click();
     });
 
-    // Copy Headcount
     document.getElementById("copySummaryBtn")?.addEventListener("click", () => {
       const attending = guestsData.filter(g => g.status === "Attending").map(g => g.name);
       const pending = guestsData.filter(g => g.status === "Awaiting").map(g => g.name);
@@ -559,7 +658,7 @@ The Fried-Chung Family`
       <div class="absolute -top-10 -right-10 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <!-- VISUAL ARTWORK -->
+      <!-- Artwork Banner -->
       <div class="flex items-center justify-around gap-2 pt-2 px-2">
         <div class="flex flex-col items-center bg-slate-950/70 border border-amber-400/30 rounded-2xl p-3 w-36 sm:w-44 shadow-lg">
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-24 sm:w-28 h-24 sm:h-28 object-contain poke-float drop-shadow-[0_8px_16px_rgba(250,204,21,0.3)]">
@@ -591,7 +690,7 @@ The Fried-Chung Family`
         </p>
       </div>
 
-      <!-- High-Visibility Event Detail Cards -->
+      <!-- Event Details -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
         <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center gap-3.5">
           <span class="text-3xl">📅</span>
@@ -610,19 +709,19 @@ The Fried-Chung Family`
         </div>
       </div>
 
-      <!-- Food Announcement: Pizza & Ice Cream Cake -->
+      <!-- Food Announcement -->
       <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-400/30 text-sm sm:text-base text-amber-200 flex items-center justify-center gap-2 font-medium">
         <span class="text-xl">🍕🎂</span>
         <span><strong>Pizza & ice cream cake</strong> will be served!</span>
       </div>
 
-      <!-- Grip Socks Highlight Badge -->
+      <!-- Grip Socks Notice -->
       <div class="p-3.5 rounded-2xl bg-red-950/40 border border-red-500/30 text-sm sm:text-base text-red-200 flex items-center justify-center gap-2 font-medium">
         <span class="text-xl">🧦</span>
         <span><strong>Grip socks provided by Ferox</strong> for all kids upon arrival!</span>
       </div>
 
-      <!-- Quick Action Buttons -->
+      <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
         <a href="https://maps.google.com/?q=Ferox+Athletics+65+Jay+St+Brooklyn+NY+11201" target="_blank" rel="noopener noreferrer" class="text-sm font-bold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 transition flex items-center gap-2">
           <span>🗺️</span> Open Google Maps
@@ -633,7 +732,7 @@ The Fried-Chung Family`
       </div>
     </section>
 
-    <!-- RSVP Section (Connected to Firestore) -->
+    <!-- RSVP Section -->
     <section class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
       <div class="border-b border-slate-800 pb-4">
         <h2 class="text-xl sm:text-2xl font-bold font-ninja text-white">RSVP for Your Ninja</h2>
@@ -746,7 +845,7 @@ The Fried-Chung Family`
         <div id="hostDietaryList" class="space-y-1.5 text-sm"></div>
       </div>
 
-      <!-- Master Roster Table With 1-Click Link Generators & Email Drafters -->
+      <!-- Master Roster Table With 1-Click HTML Card Copy & Links -->
       <div class="overflow-x-auto rounded-2xl border border-slate-800">
         <table class="w-full text-left text-sm">
           <thead class="bg-slate-900 text-slate-300 font-bold border-b border-slate-800">
